@@ -1,0 +1,14 @@
+#!/bin/sh
+#SBATCH --job-name=python_job_conda
+#SBATCH --time=0-00:03:00
+#SBATCH --account=project_name
+#SBATCH --output=my_job_output.txt
+#SBATCH --ntasks=1
+#SBATCH --partition=cpucourt
+
+ module purge
+ module load miniconda
+
+ conda activate /home/user1/.conda/envs/my_env
+ python /home/user1/jobs/my_code.py
+ conda deactivate
