@@ -1,4 +1,4 @@
 import numpy as np
-
 a = 3+5
-print(a)
+b = 6*a^3
+print(a, 'new' ,b)
