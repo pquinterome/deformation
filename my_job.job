@@ -10,5 +10,5 @@
  module load miniconda
 
  conda activate /home/user1/.conda/envs/my_env
- python /home/user1/jobs/my_code.py
+ python /home/user1/jobs/code.py
  conda deactivate
