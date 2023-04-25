@@ -10,5 +10,5 @@
 module purge
 module load cuda/9.0
 source myproject_env/bin/activate
-python /deformation/code.py
+python /cluster/home/quintep/deformation/code.py
 deactivate
