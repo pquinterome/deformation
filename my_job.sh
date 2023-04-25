@@ -13,5 +13,5 @@ module purge
 #echo ">>> Installing Requirements";
 #pip install -r requirements.txt
 #echo ">>> Running Code";
-python /cluster/home/quintep/deformation/code.py
+python code.py
 deactivate
