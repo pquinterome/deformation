@@ -1,12 +1,11 @@
 #!/bin/bash
-#BSUB -n 1
-#BSUB -W 
-#BSUB -R 
-#BSUB -J MRI_xcat_phantom
+#BSUB -n 24                     # 24 cores
+#BSUB -W 8:00                   # 8-hour run-time
+#BSUB -R "rusage[mem=4000]"     # 4000 MB per core
+#BSUB -J phantom
 #BSUB -o model.out
 #BSUB -e model.err
-#BSUB -N 4
-
+#BSUB -N
 
 module purge
 echo ">>> Open environment";
