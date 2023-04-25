@@ -11,4 +11,4 @@ module purge
 module load cuda/9.0
 source myproject_env/bin/activate
 python code.py
-conda deactivate
+deactivate
