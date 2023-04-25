@@ -10,5 +10,6 @@
 module purge
 module load cuda/9.0
 source /cluster/home/quintep/myproject_env/bin/activate
+pip install -r requirements.txt
 python /cluster/home/quintep/deformation/code.py
 deactivate
