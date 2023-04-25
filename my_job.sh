@@ -8,10 +8,10 @@
 #BSUB -N
 
 module purge
-echo ">>> Open environment";
-source /cluster/home/quintep/myproject_env/bin/activate
-echo ">>> Installing Requirements";
-pip install -r requirements.txt
-echo ">>> Running Code";
+#echo ">>> Open environment";
+#source /cluster/home/quintep/myproject_env/bin/activate
+#echo ">>> Installing Requirements";
+#pip install -r requirements.txt
+#echo ">>> Running Code";
 python /cluster/home/quintep/deformation/code.py
 deactivate
