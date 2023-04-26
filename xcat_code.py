@@ -19,7 +19,7 @@ from scipy.stats import shapiro
 from scipy.stats import spearmanr
 from scipy.stats import pearsonr
 from sklearn.metrics import mean_absolute_error, mean_squared_error
-from sklearn.metrics import plot_roc_curve, auc, precision_score, recall_score, f1_score, roc_curve
+from sklearn.metrics import RocCurveDisplay, auc, precision_score, recall_score, f1_score, roc_curve
 from numpy import interp
 a = 3+5
 b = 6*a^3
