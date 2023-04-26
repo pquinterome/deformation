@@ -9,8 +9,6 @@
 
 module purge
 
-echo ">>> Open conda environemet";
-conda activate xcat_phantom
 echo ">>> Installing Requirements";
 conda run -n xcat_phantom pip install -r /cluster/home/quintep/deformation/requirements.txt
 echo ">>> Running Code";
