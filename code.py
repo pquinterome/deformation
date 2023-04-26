@@ -11,7 +11,7 @@ import seaborn as sns
 import sklearn
 import tensorflow as tf
 from sklearn.model_selection import train_test_split, KFold, StratifiedKFold
-from tensorflow.keras import Sequential
+from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Input, Dense, Conv2D, MaxPool2D, Flatten, Dropout, GlobalMaxPooling2D
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import EarlyStopping
