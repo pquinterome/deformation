@@ -9,13 +9,10 @@
 
 module purge
 
-echo ">>> Openning conda environment";
+echo ">>> Open conda environemet";
 conda activate xcat_phantom
-echo ">>> Open environment";
-conda run -n xcat_phantom pip install -r requirements.txt
-#source /cluster/home/quintep/myproject_env/bin/activate
+echo ">>> Installing Requirements";
+conda run -n xcat_phantom pip install -r /cluster/home/quintep/deformation/requirements.txt
 echo ">>> Running Code";
-#pip install -r requirements.txt
-#echo ">>> Running Code";
-python code.py
-deactivate
+python /cluster/home/quintep/deformation/code.py
+deactivatecd
