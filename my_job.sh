@@ -9,9 +9,12 @@
 
 module purge
 
+echo ">>> Openning conda environment";
+conda activate xcat_phantom
 echo ">>> Open environment";
+conda run -n xcat_phantom pip install -r requirements.txt
 #source /cluster/home/quintep/myproject_env/bin/activate
-#echo ">>> Installing Requirements";
+echo ">>> Running Code";
 #pip install -r requirements.txt
 #echo ">>> Running Code";
 python code.py
