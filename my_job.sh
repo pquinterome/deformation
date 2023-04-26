@@ -9,7 +9,7 @@
 
 module purge
 
-#echo ">>> Open environment";
+echo ">>> Open environment";
 #source /cluster/home/quintep/myproject_env/bin/activate
 #echo ">>> Installing Requirements";
 #pip install -r requirements.txt

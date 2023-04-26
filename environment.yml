@@ -1,0 +1,11 @@
+name: xcat_phantom
+dependencies:
+  - numpy
+  - scipy
+  - xarray
+  - pandas
+  - dask
+  - jupyter
+  - matplotlib
+  - pip:
+    - pytest
