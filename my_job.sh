@@ -3,11 +3,12 @@
 #BSUB -W 8:00                   # 8-hour run-time
 #BSUB -R "rusage[mem=4000]"     # 4000 MB per core
 #BSUB -J phantom
-#BSUB -o %.out
-#BSUB -e %.err
+#BSUB -o model.out
+#BSUB -e model.err
 #BSUB -N
 
 module purge
+module load cuda/9.0
 
 echo ">>> Installing Requirements";
 conda run -n xcat_phantom pip install -r /cluster/home/quintep/deformation/requirements.txt
