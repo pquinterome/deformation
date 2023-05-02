@@ -41,7 +41,7 @@ sampl = np.load('inputs/sample.npy', allow_pickle=True)
 vect = eigen_vect.reshape(3, 70, 256, 256, 3)
 d = []
 l = []
-for r in range(1000):   
+for r in range(500):   
     val = sampl[r]/10000
     l.append(val)
     vectors = a_dvf + sum(np.array([vect[i]*val[i] for i in range(len(sampl[8]))]))
@@ -59,8 +59,8 @@ for r in range(1000):
 ll = np.array(l)
 dd = np.array(d)
 #
-np.save('eigen_val.npy', ll)
-np.save('dataset_imgs.npy', dd)
+np.save('eigen_val_1.npy', ll)
+np.save('dataset_imgs_1.npy', dd)
 print('eigenvalues shape', ll.shape)
 print('dataset_images', dd.shape)
 print('All is going ok')
