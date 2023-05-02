@@ -37,7 +37,7 @@ eigen_val = pca_3.explained_variance_
 print('Eigen Vectors Shape', eigen_vect.shape)
 print('Eigen Values Shape', eigen_val.shape)
 ##############################
-sampl = np.load('sample.npy')
+sampl = np.load('inputs/sample.npy', allow_pickle=True)
 vect = eigen_vect.reshape(3, 70, 256, 256, 3)
 d = []
 l = []
@@ -50,11 +50,11 @@ for r in range(1000):
     displacement_image.SetOrigin((0,0,0))
     displacement_image.SetSpacing((1,1,1))
     tx = sitk.DisplacementFieldTransform(displacement_image)
-    moving_image = sitk.GetImageFromArray(np.ascontiguousarray(xcat_ct[0][::-1,:,:]))
+    moving_image = sitk.GetImageFromArray(np.ascontiguousarray(ct_4D[0][:,:,:]))
     #sitk.WriteImage(fixed_image, os.path.join(OUTPUT_DIR, f"mr/fixed_image{i}.mha"))
     syn_deform = sitk.Resample(moving_image, tx)
     syn_deform = sitk.GetArrayViewFromImage(syn_deform) 
-    syn_deform = syn_deform[::-1,:,:]   
+    syn_deform = syn_deform[:,:,:]   
     d.append(syn_deform)
 ll = np.array(l)
 dd = np.array(d)
@@ -64,9 +64,26 @@ np.save('dataset_imgs.npy', dd)
 print('eigenvalues shape', ll.shape)
 print('dataset_images', dd.shape)
 print('All is going ok')
-a = 3+5
-b = 6*a^3
-c = np.random.random((256,256))
-print('old->', a, 'new->' ,b)
-plt.imshow(c)
-#plt.savefig('random.png')
+#
+plt.figure(figsize=(35,18))
+plt.subplot(3,5,1)
+plt.imshow(ct_4D[0][:,129,:], cmap='gray')
+plt.axhline(y=35, color='r', linestyle='--', lw=0.5)
+plt.axhline(y=64, color='c', linestyle='-', lw=1)
+#plt.ylim(0, 70)
+plt.subplot(3,5,2)
+plt.imshow(dd[0][:,129,:], cmap='gray')
+plt.axhline(y=35, color='r', linestyle='--', lw=0.5)
+plt.axhline(y=64, color='c', linestyle='-', lw=1)
+#
+plt.subplot(3,5,3)
+plt.imshow(dd[1][:,129,:], cmap='gray')
+plt.axhline(y=35, color='r', linestyle='--', lw=0.5)
+plt.axhline(y=64, color='c', linestyle='-', lw=1)
+#
+plt.subplot(3,5,4)
+plt.imshow(dd[2][:,129,:], cmap='gray')
+plt.axhline(y=35, color='r', linestyle='--', lw=0.5)
+plt.axhline(y=64, color='c', linestyle='-', lw=1)
+
+plt.savefig('random.png')
