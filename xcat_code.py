@@ -22,8 +22,8 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error
 from sklearn.metrics import RocCurveDisplay, auc, precision_score, recall_score, f1_score, roc_curve
 from numpy import interp
 #
-ct_4D = np.load('inputs/ct_4D.npy', allow_pickle=allow_pickle)
-dvf = np.load('inputs/dvf.npy', allow_pickle=allow_pickle)
+ct_4D = np.load('inputs/ct_4D.npy', allow_pickle=True)
+dvf = np.load('inputs/dvf.npy', allow_pickle=True)
 a_dvf = dvf.mean(axis=0)
 from sklearn.decomposition import PCA
 pca_3 = PCA(n_components=3, random_state=2046)
