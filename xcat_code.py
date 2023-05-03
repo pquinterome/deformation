@@ -41,7 +41,7 @@ sampl = np.load('inputs/sample.npy', allow_pickle=True)
 vect = eigen_vect.reshape(3, 70, 256, 256, 3)
 d = []
 l = []
-for r in range(500):   
+for r in range(100):   
     val = sampl[r]/10000
     l.append(val)
     vectors = a_dvf + sum(np.array([vect[i]*val[i] for i in range(len(sampl[8]))]))
