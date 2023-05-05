@@ -13,77 +13,76 @@ import sklearn
 import tensorflow as tf
 from sklearn.model_selection import train_test_split, KFold, StratifiedKFold
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Input, Dense, Conv2D, MaxPool2D, Flatten, Dropout, GlobalMaxPooling2D
+from tensorflow.keras.layers import Input, Dense, Conv3D, MaxPool3D, Flatten, Dropout, GlobalMaxPooling3D
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import EarlyStopping
 from scipy.stats import shapiro
 from scipy.stats import spearmanr
 from scipy.stats import pearsonr
+from sklearn.metrics import mean_absolute_error as mae
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from sklearn.metrics import RocCurveDisplay, auc, precision_score, recall_score, f1_score, roc_curve
 from numpy import interp
 from sklearn.decomposition import PCA
 #
-ct_4D = np.load('inputs/ct_4D.npy', allow_pickle=True)
-dvf = np.load('inputs/dvf.npy', allow_pickle=True)
-print('DVF shape', dvf.shape)
-a_dvf = dvf.mean(axis=0)
-###### PCA #################
-pca_3 = PCA(n_components=3, random_state=2046)
-flat = np.reshape(dvf, (9, 70*256*256*3))
-pca_3.fit(flat)
-eigen_vect = pca_3.components_
-eigen_val = pca_3.explained_variance_
-print('Eigen Vectors Shape', eigen_vect.shape)
-print('Eigen Values Shape', eigen_val.shape)
-##############################
-sampl = np.load('inputs/sample.npy', allow_pickle=True)
-vect = eigen_vect.reshape(3, 70, 256, 256, 3)
-d = []
-l = []
-for r in range(50):   
-    val = sampl[r]/10000
-    l.append(val)
-    vectors = a_dvf + sum(np.array([vect[i]*val[i] for i in range(len(sampl[8]))]))
-    displacement_image = sitk.GetImageFromArray(vectors, isVector=True)
-    # Set the displacement image's origin and spacing to relevant values
-    displacement_image.SetOrigin((0,0,0))
-    displacement_image.SetSpacing((1,1,1))
-    tx = sitk.DisplacementFieldTransform(displacement_image)
-    moving_image = sitk.GetImageFromArray(np.ascontiguousarray(ct_4D[0][:,:,:]))
-    #sitk.WriteImage(fixed_image, os.path.join(OUTPUT_DIR, f"mr/fixed_image{i}.mha"))
-    syn_deform = sitk.Resample(moving_image, tx)
-    syn_deform = sitk.GetArrayViewFromImage(syn_deform) 
-    syn_deform = syn_deform[:,:,:]   
-    d.append(syn_deform)
-ll = np.array(l)
-dd = np.array(d)
-#
-np.save('eigen_val_1.npy', ll)
-np.save('dataset_imgs_1.npy', dd)
-print('eigenvalues shape', ll.shape)
-print('dataset_images', dd.shape)
-print('All is going ok')
-#
+#########Inputs and Outputs##########
+y= np.load('inputs/sample.npy',allow_pickle=True)/10000
+y = y[:500]
+print('labels size',y.shape)
+image_1= np.load('inputs/images_1.npy', allow_pickle=True)
+#image_1=image_1[:100]
+print(image_1.shape)
+X_train, X_test, y_train, y_test = train_test_split(image_1, y, test_size=0.2, random_state=1)
+print(X_train.shape)
+print(X_test.shape)
+X_train = X_train.reshape(400, 70, 256, 256,1)
+X_test = X_test.reshape(100, 70, 256, 256,1)
+batch_size=10
+# Prepare the training dataset.
+train_dataset = tf.data.Dataset.from_tensor_slices((X_train, y_train))
+train_dataset = train_dataset.shuffle(buffer_size=1024).batch(batch_size)
+# Prepare the validation dataset.
+val_dataset = tf.data.Dataset.from_tensor_slices((X_test, y_test))
+val_dataset = val_dataset.batch(batch_size)
+############Model##################
+i = Input(shape=(70, 256, 256, 1))
+x = Conv3D(filters=32, kernel_size=(6,6,6), activation='relu', padding='same')(i)
+x = MaxPool3D(pool_size=(2,2,2))(x)
+x = Conv3D(filters=32, kernel_size=(3,3,3), activation='relu', padding='same')(x)
+x = MaxPool3D(pool_size=(2,2,2))(x)
+x = Flatten()(x)
+x = Dense(180, activation='relu')(x)
+x = Dense(90, activation='relu')(x)
+x = Dense(3, activation='linear')(x)
+model = Model(i, x)
+model.compile(loss='mean_squared_error', optimizer= "adam", metrics=['mean_absolute_error'])
+early_stop = EarlyStopping(monitor='val_loss', patience=3)
+############Model Fit###############
+history = model.fit(train_dataset, validation_data= val_dataset, epochs=300, callbacks=[early_stop], verbose=1)
+pred = model.predict(X_test)
+print('Total', mae(y_test, pred))
+##### Loss during training##########
 plt.figure(figsize=(35,18))
 plt.subplot(3,5,1)
-plt.imshow(ct_4D[0][:,129,:], cmap='gray')
-plt.axhline(y=35, color='r', linestyle='--', lw=0.5)
-plt.axhline(y=64, color='c', linestyle='-', lw=1)
-#plt.ylim(0, 70)
+plt.title('Loss / Mean Squared Error')
+plt.plot(history.history['loss'], label='train')
+plt.plot(history.history['val_loss'], label='test')
+plt.legend()
+#
 plt.subplot(3,5,2)
-plt.imshow(dd[0][:,129,:], cmap='gray')
-plt.axhline(y=35, color='r', linestyle='--', lw=0.5)
-plt.axhline(y=64, color='c', linestyle='-', lw=1)
+plt.title('Loss')
+plt.plot(history.history['loss'], label='train')
+plt.legend()
 #
 plt.subplot(3,5,3)
-plt.imshow(dd[1][:,129,:], cmap='gray')
-plt.axhline(y=35, color='r', linestyle='--', lw=0.5)
-plt.axhline(y=64, color='c', linestyle='-', lw=1)
+plt.title('Loss / Mean Squared Error')
+plt.plot(history.history['val_loss'], label='test')
+plt.legend()
 #
 plt.subplot(3,5,4)
-plt.imshow(dd[2][:,129,:], cmap='gray')
-plt.axhline(y=35, color='r', linestyle='--', lw=0.5)
-plt.axhline(y=64, color='c', linestyle='-', lw=1)
-
+plt.title('Mean Absolute Error')
+plt.plot(history.history['mean_absolute_error'], label='mae')
+plt.plot(history.history['val_mean_absolute_error'], label='val_mae')
+plt.legend()
+#
 plt.savefig('random.png')
