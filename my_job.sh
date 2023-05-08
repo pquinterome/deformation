@@ -8,10 +8,10 @@
 #BSUB -N
 
 module purge
-module load cuda/9.0
+#module load cuda/9.0
 
 echo ">>> Installing Requirements";
-conda run -n xcat_phantom pip install -r /cluster/home/quintep/deformation/requirements.txt
+conda run -n xcat pip install -r /cluster/home/quintep/deformation/requirements.txt
 echo ">>> Running Code";
 python /cluster/home/quintep/deformation/xcat_code.py
 echo ">>> End";
