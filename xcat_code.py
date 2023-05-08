@@ -30,7 +30,7 @@ pca_val= np.load('inputs/sample.npy',allow_pickle=True)/10000
 pca = pca_val[:100]
 print('labels size',pca.shape)
 image_1= np.load('inputs/images_1.npy', allow_pickle=True)
-#image_1=image_1[:100]
+image_1=image_1[:100]
 print(image_1.shape)
 X_train, X_test, y_train, y_test = train_test_split(image_1, pca, test_size=0.2, random_state=1)
 print(X_train.shape)
