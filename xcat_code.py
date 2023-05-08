@@ -58,7 +58,7 @@ model = Model(i, x)
 model.compile(loss='mean_squared_error', optimizer= "adam", metrics=['mean_absolute_error'])
 early_stop = EarlyStopping(monitor='val_loss', patience=300)
 ############Model Fit###############
-history = model.fit(train_dataset, validation_data= val_dataset, epochs=300, callbacks=[early_stop], verbose=1)
+history = model.fit(train_dataset, validation_data= val_dataset, epochs=300, callbacks=[], verbose=1)
 pred = model.predict(X_test)
 print('Total', mae(y_test, pred))
 ##### Loss during training##########
