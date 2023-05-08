@@ -26,13 +26,13 @@ from numpy import interp
 from sklearn.decomposition import PCA
 #
 #########Inputs and Outputs##########
-y= np.load('inputs/sample.npy',allow_pickle=True)/10000
-y = y[:500]
-print('labels size',y.shape)
+pca_val= np.load('inputs/sample.npy',allow_pickle=True)/10000
+pca = pca_val[:500]
+print('labels size',pca.shape)
 image_1= np.load('inputs/images_1.npy', allow_pickle=True)
 #image_1=image_1[:100]
 print(image_1.shape)
-X_train, X_test, y_train, y_test = train_test_split(image_1, y, test_size=0.2, random_state=1)
+X_train, X_test, y_train, y_test = train_test_split(image_1, pca, test_size=0.2, random_state=1)
 print(X_train.shape)
 print(X_test.shape)
 X_train = X_train.reshape(400, 70, 256, 256,1)
