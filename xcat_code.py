@@ -46,7 +46,7 @@ val_dataset = tf.data.Dataset.from_tensor_slices((X_test, y_test))
 val_dataset = val_dataset.batch(batch_size)
 ############Model##################
 i = Input(shape=(70, 256, 256, 1))
-x = Conv3D(filters=32, kernel_size=(6,6,6), activation='relu', padding='same')(i)
+x = Conv3D(filters=64, kernel_size=(6,6,6), activation='relu', padding='same')(i)
 x = MaxPool3D(pool_size=(6,6,6))(x)
 x = Conv3D(filters=32, kernel_size=(3,3,3), activation='relu', padding='same')(x)
 x = MaxPool3D(pool_size=(2,2,2))(x)
