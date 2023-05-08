@@ -27,7 +27,7 @@ from sklearn.decomposition import PCA
 #
 #########Inputs and Outputs##########
 pca_val= np.load('inputs/sample.npy',allow_pickle=True)/10000
-pca = pca_val[:500]
+pca = pca_val[:100]
 print('labels size',pca.shape)
 image_1= np.load('inputs/images_1.npy', allow_pickle=True)
 #image_1=image_1[:100]
@@ -35,8 +35,8 @@ print(image_1.shape)
 X_train, X_test, y_train, y_test = train_test_split(image_1, pca, test_size=0.2, random_state=1)
 print(X_train.shape)
 print(X_test.shape)
-X_train = X_train.reshape(400, 70, 256, 256,1)
-X_test = X_test.reshape(100, 70, 256, 256,1)
+X_train = X_train.reshape(80, 70, 256, 256,1)
+X_test = X_test.reshape(20, 70, 256, 256,1)
 batch_size=10
 # Prepare the training dataset.
 train_dataset = tf.data.Dataset.from_tensor_slices((X_train, y_train))
@@ -58,7 +58,7 @@ model = Model(i, x)
 model.compile(loss='mean_squared_error', optimizer= "adam", metrics=['mean_absolute_error'])
 early_stop = EarlyStopping(monitor='val_loss', patience=300)
 ############Model Fit###############
-history = model.fit(train_dataset, validation_data= val_dataset, epochs=300, callbacks=[], verbose=1)
+history = model.fit(train_dataset, validation_data= val_dataset, epochs=100, callbacks=[], verbose=1)
 pred = model.predict(X_test)
 print('Total', mae(y_test, pred))
 ##### Loss during training##########
