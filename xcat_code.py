@@ -13,7 +13,7 @@ import sklearn
 import tensorflow as tf
 from sklearn.model_selection import train_test_split, KFold, StratifiedKFold
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Input, Dense, Conv3D, MaxPool3D, Flatten, Dropout, GlobalMaxPooling3D
+from tensorflow.keras.layers import Input, Dense, Conv3D, MaxPool3D, Flatten, Dropout, GlobalMaxPooling3D, BatchNormalization
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import EarlyStopping
 from scipy.stats import shapiro
@@ -31,7 +31,7 @@ pca = pca_val[:100]
 print('labels size',pca.shape)
 image_1= np.load('inputs/images_1.npy', allow_pickle=True)
 image_1=image_1[:100]
-print(image_1.shape)
+print('Inputs size', image_1.shape)
 X_train, X_test, y_train, y_test = train_test_split(image_1, pca, test_size=0.2, random_state=1)
 print(X_train.shape)
 print(X_test.shape)
@@ -48,6 +48,7 @@ val_dataset = val_dataset.batch(batch_size)
 i = Input(shape=(70, 256, 256, 1))
 x = Conv3D(filters=32, kernel_size=(6,6,6), activation='relu', padding='same')(i)
 x = MaxPool3D(pool_size=(6,6,6))(x)
+x = BatchNormalization()(x)
 #x = Dropout(0.5)(x)
 x = Conv3D(filters=32, kernel_size=(6,6,6), activation='relu', padding='same')(x)
 x = MaxPool3D(pool_size=(6,6,6))(x)
@@ -62,26 +63,26 @@ early_stop = EarlyStopping(monitor='val_loss', patience=10, mode='min')
 ############Model Fit###############
 history = model.fit(train_dataset, validation_data= val_dataset, epochs=100, callbacks=[early_stop], verbose=2)
 pred = model.predict(X_test)
-print('Total', mae(y_test, pred))
+print('Total mae', mae(y_test, pred))
 ##### Loss during training##########
 plt.figure(figsize=(35,18))
-plt.subplot(3,5,1)
+plt.subplot(1,4,1)
 plt.title('Loss / Mean Squared Error')
 plt.plot(history.history['loss'], label='train')
 plt.plot(history.history['val_loss'], label='test')
 plt.legend()
 #
-plt.subplot(3,5,2)
+plt.subplot(1,4,2)
 plt.title('Loss')
 plt.plot(history.history['loss'], label='train')
 plt.legend()
 #
-plt.subplot(3,5,3)
+plt.subplot(1,4,3)
 plt.title('Loss / Mean Squared Error')
 plt.plot(history.history['val_loss'], label='test')
 plt.legend()
 #
-plt.subplot(3,5,4)
+plt.subplot(1,4,4)
 plt.title('Mean Absolute Error')
 plt.plot(history.history['mean_absolute_error'], label='mae')
 plt.plot(history.history['val_mean_absolute_error'], label='val_mae')
