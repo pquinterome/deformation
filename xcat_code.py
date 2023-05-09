@@ -65,7 +65,7 @@ history = model.fit(train_dataset, validation_data= val_dataset, epochs=100, cal
 pred = model.predict(X_test)
 print('Total mae', mae(y_test, pred))
 ##### Loss during training##########
-plt.figure(figsize=(35,18))
+plt.figure(figsize=(20,18))
 plt.subplot(1,4,1)
 plt.title('Loss / Mean Squared Error')
 plt.plot(history.history['loss'], label='train')
