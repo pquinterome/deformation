@@ -60,7 +60,7 @@ x = Dense(90, activation='relu')(x)
 x = Dense(3, activation='linear')(x)
 model = Model(i, x)
 model.compile(loss='mean_squared_error', optimizer= "adam", metrics=['mean_absolute_error'])
-early_stop = EarlyStopping(monitor='val_loss', patience=10, mode='min')
+early_stop = EarlyStopping(monitor='val_loss', patience=100, mode='min')
 ############Model Fit###############
 history = model.fit(train_dataset, validation_data= val_dataset, batch_size=10, epochs=100, callbacks=[early_stop], verbose=2)
 #history = model.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), batch_size=10, epochs=100, callbacks=[early_stop], verbose=1)
