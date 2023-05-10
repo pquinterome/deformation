@@ -27,17 +27,17 @@ from sklearn.decomposition import PCA
 #
 #########Inputs and Outputs##########
 pca_val= np.load('inputs/sample.npy',allow_pickle=True)/10000
-pca = pca_val[:200]
+pca = pca_val[:400]
 print('labels_size',pca.shape)
 image_1= np.load('inputs/images_1.npy', allow_pickle=True)
-image_1=image_1[:200]
+image_1=image_1[:400]
 image = image_1[:,:58,50:-50,50:-50]
 print('Inputs_size', image_1.shape)
 X_train, X_test, y_train, y_test = train_test_split(image, pca, test_size=0.2, random_state=1)
 print(X_train.shape)
 print(X_test.shape)
-X_train = X_train.reshape(160, 58, 156, 156,1)
-X_test = X_test.reshape(40, 58, 156, 156,1)
+X_train = X_train.reshape(320, 58, 156, 156,1)
+X_test = X_test.reshape(80, 58, 156, 156,1)
 batch_size=10
 # Prepare the training dataset.
 train_dataset = tf.data.Dataset.from_tensor_slices((X_train, y_train))
