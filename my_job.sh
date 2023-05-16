@@ -1,11 +1,12 @@
 #!/bin/bash
-#BSUB -n 24                     # 24 cores
+#BSUB -n 120                     # 24 cores
 #BSUB -W 8:00                   # 8-hour run-time
-#BSUB -R "rusage[mem=4000]"     # 4000 MB per core
+#BSUB -R "rusage[mem=40000]"     # 4000 MB per core
 #BSUB -J phantom
 #BSUB -o model.out
 #BSUB -e model.err
 #BSUB -N
+#BSUB -m “pllimphsing5 pllimphsing6”
 
 module purge
 #module load cuda
