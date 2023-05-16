@@ -1,7 +1,7 @@
 #!/bin/bash
 #BSUB -n 120                     # 24 cores
-#BSUB -W 8:00                   # 8-hour run-time
-#BSUB -R "rusage[mem=40000]"     # 4000 MB per core
+#BSUB -W 80:00                   # 80-hour run-time
+#BSUB -R "rusage[mem=400000]"     # 4000 MB per core
 #BSUB -J phantom
 #BSUB -o model.out
 #BSUB -e model.err
