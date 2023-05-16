@@ -6,7 +6,7 @@
 #BSUB -o model.out
 #BSUB -e model.err
 #BSUB -N
-#BSUB -m “pllimphsing5 pllimphsing6”
+#BSUB -m pllimphsing5
 
 module purge
 #module load cuda
