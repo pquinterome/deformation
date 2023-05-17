@@ -73,6 +73,9 @@ history = model.fit(train_dataset, validation_data= val_dataset, batch_size=10, 
 pred = model.predict(X_test)
 print('Total mae', mae(y_test, pred))
 print(pred)
+
+np.save('y_testy.npy', y_test)
+np.save('predyy.npy', pred)
 ##### Loss during training##########
 
 fig = plt.figure(1)
