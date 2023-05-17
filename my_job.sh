@@ -7,7 +7,7 @@
 #BSUB -e model.err
 #BSUB -N
 
-module purge
+#module purge
 #module load cuda
 
 echo ">>> Installing Requirements";
