@@ -65,7 +65,7 @@ x = Dropout(0.3)(x)
 x = Dense(90, activation='relu')(x)
 x = Dense(3, activation='relu')(x)
 model = Model(i, x)
-adam = tf.keras.optimizers.Adam(learning_rate=0.01, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
+adam = tf.keras.optimizers.Adam(learning_rate=0.0001)
 model.compile(loss='mean_squared_error', optimizer= adam, metrics=['mean_absolute_error'])
 early_stop = EarlyStopping(monitor='val_loss', patience=10, mode='min')
 ############Model Fit###############
