@@ -27,6 +27,9 @@ from sklearn.decomposition import PCA
 #
 #########Inputs and Outputs##########
 pca_val= np.load('inputs/sample.npy',allow_pickle=True)/10000
+pca_val[:,0] = pca_val[:,0]/10000
+pca_val[:,1] = pca_val[:,1]/1000
+pca_val[:,2] = pca_val[:,2]/100
 pca = pca_val[:800]
 print('labels_size',pca.shape)
 image_1= np.load('inputs/images_1.npy', allow_pickle=True)
@@ -105,11 +108,11 @@ fig2 = plt.figure(4)
 plt.scatter(x=y_test[:,0], y=pred[:,0], edgecolors='k', color='r', alpha=0.7, label='Q1')
 plt.scatter(x=y_test[:,1], y=pred[:,1], edgecolors='k', color='g', alpha=0.7, label='Q2')
 plt.scatter(x=y_test[:,2], y=pred[:,2], edgecolors='k', color='cyan', alpha=0.7, label='Q3')
-plt.plot([0, 6000], [0, 6000], linestyle='--', lw=2, color='k', alpha=.4)
-plt.plot([300, 6000], [0, 5700], 'b--', linewidth=0.8)
-plt.plot([0, 5700], [300, 6000],    'b--', linewidth=0.8, label='$\pm$ 5%')
-plt.plot([600, 6000], [0, 5400], 'g--', linewidth=0.8)
-plt.plot([0, 5400], [600, 6000],    'g--', linewidth=0.8, label='$\pm$ 10%')
+plt.plot([0, 1], [0, 1], linestyle='--', lw=2, color='k', alpha=.4)
+plt.plot([0.05, 1], [0, 0.95], 'b--', linewidth=0.8)
+plt.plot([0, 0.95], [0.05, 1],    'b--', linewidth=0.8, label='$\pm$ 5%')
+plt.plot([0.10, 1], [0, 0.90], 'g--', linewidth=0.8)
+plt.plot([0, 0.90], [0.10, 1],    'g--', linewidth=0.8, label='$\pm$ 10%')
 plt.xlabel('True Values')
 plt.ylabel('Predicted Values')
 plt.legend()
