@@ -27,16 +27,18 @@ from sklearn.decomposition import PCA
 #
 #########Inputs and Outputs##########
 pca_val= np.load('inputs/sample.npy',allow_pickle=True)/10000
-pca_val[:,0] = pca_val[:,0]/100
-#pca_val[:,1] = (pca_val[:,1]/1000)
-#pca_val[:,2] = (pca_val[:,2]/100)
-pca = pca_val[:800]
-pca = pca[:,0]
+pca_val[:,0] = pca_val[:,0]/10000
+pca_val[:,1] = (pca_val[:,1]/1000)
+pca_val[:,2] = (pca_val[:,2]/100)
+pca = pca_val[:400]
+pca = np.concatenate((pca, pca), axis=0)
+#pca = pca[:,0]
 print('labels_size',pca.shape)
 image_1= np.load('inputs/images_1.npy', allow_pickle=True)
-image_2= np.load('inputs/images_2.npy', allow_pickle=True)
-image_1 = np.concatenate((image_1,image_2), axis=0)
-image_1=image_1[:800]
+#image_2= np.load('inputs/images_2.npy', allow_pickle=True)
+#image_1 = np.concatenate((image_1,image_2), axis=0)
+image_1=image_1[:400]
+image_1 = np.concatenate((image_1,image_1), axis=0)
 image = image_1[:,:58,50:-50,50:-50]
 print('Inputs_size', image_1.shape)
 X_train, X_test, y_train, y_test = train_test_split(image, pca, test_size=0.2, random_state=1)
@@ -67,7 +69,7 @@ x = Flatten()(x)
 x = Dense(180, activation='relu')(x)
 x = Dropout(0.3)(x)
 x = Dense(90, activation='relu')(x)
-x = Dense(1, activation='linear')(x)
+x = Dense(3, activation='linear')(x)
 model = Model(i, x)
 #adam = tf.keras.optimizers.Adam(learning_rate=0.0001)
 model.compile(loss='mean_squared_error', optimizer= "adam", metrics=['mean_absolute_error'])
@@ -109,11 +111,11 @@ fig2 = plt.figure(4)
 plt.scatter(x=y_test[:,0], y=pred[:,0], edgecolors='k', color='r', alpha=0.7, label='Q1')
 #plt.scatter(x=y_test[:,1], y=pred[:,1], edgecolors='k', color='g', alpha=0.7, label='Q2')
 #plt.scatter(x=y_test[:,2], y=pred[:,2], edgecolors='k', color='cyan', alpha=0.7, label='Q3')
-plt.plot([0, 100], [0, 100], linestyle='--', lw=2, color='k', alpha=.4)
-plt.plot([5, 100], [0, 95], 'b--', linewidth=0.8)
-plt.plot([0, 95], [5, 100],    'b--', linewidth=0.8, label='$\pm$ 5%')
-#plt.plot([0.10, 1], [0, 0.90], 'g--', linewidth=0.8)
-#plt.plot([0, 0.90], [0.10, 1],    'g--', linewidth=0.8, label='$\pm$ 10%')
+plt.plot([0, 1], [0, 1], linestyle='--', lw=2, color='k', alpha=.4)
+plt.plot([0.05, 1], [0, 0.95], 'b--', linewidth=0.8)
+plt.plot([0, 0.95], [0.05, 1],    'b--', linewidth=0.8, label='$\pm$ 5%')
+plt.plot([0.10, 1], [0, 0.90], 'g--', linewidth=0.8)
+plt.plot([0, 0.90], [0.10, 1],    'g--', linewidth=0.8, label='$\pm$ 10%')
 plt.xlabel('True Values')
 plt.ylabel('Predicted Values')
 plt.legend()
