@@ -31,14 +31,14 @@ pca_val[:,0] = pca_val[:,0]/10000
 pca_val[:,1] = (pca_val[:,1]/1000)
 pca_val[:,2] = (pca_val[:,2]/100)
 pca = pca_val[:400]
-pca = np.concatenate((pca, pca), axis=0)
+#pca = np.concatenate((pca, pca), axis=0)
 #pca = pca[:,0]
 print('labels_size',pca.shape)
 image_1= np.load('inputs/images_1.npy', allow_pickle=True)
 #image_2= np.load('inputs/images_2.npy', allow_pickle=True)
 #image_1 = np.concatenate((image_1,image_2), axis=0)
 image_1=image_1[:400]
-image_1 = np.concatenate((image_1,image_1), axis=0)
+#image_1 = np.concatenate((image_1,image_1), axis=0)
 image = image_1[:,:58,50:-50,50:-50]
 print('Inputs_size', image_1.shape)
 X_train, X_test, y_train, y_test = train_test_split(image, pca, test_size=0.2, random_state=1)
@@ -55,13 +55,13 @@ val_dataset = tf.data.Dataset.from_tensor_slices((X_test, y_test))
 val_dataset = val_dataset.batch(batch_size)
 ############Model##################
 i = Input(shape=(58, 156, 156, 1))
-x = Conv3D(filters=64, kernel_size=(6,6,6), activation='relu', padding='same')(i)
+x = Conv3D(filters=12, kernel_size=(6,6,6), activation='relu', padding='same')(i)
 x = MaxPool3D(pool_size=(6,6,6))(x)
 x = BatchNormalization()(x)
 x = Conv3D(filters=32, kernel_size=(3,3,3), activation='relu', padding='same')(x)
 x = MaxPool3D(pool_size=(3,3,3))(x)
 x = BatchNormalization()(x)
-x = Conv3D(filters=12, kernel_size=(3,3,3), activation='relu', padding='same')(x)
+x = Conv3D(filters=64, kernel_size=(3,3,3), activation='relu', padding='same')(x)
 x = MaxPool3D(pool_size=(3,3,3))(x)
 x = BatchNormalization()(x)
 x = Dropout(0.5)(x)
