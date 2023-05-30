@@ -27,8 +27,8 @@ from sklearn.decomposition import PCA
 #
 #########Inputs and Outputs##########
 pca_val= np.load('inputs/sample.npy',allow_pickle=True)/10000
-pca_val[:,0] = pca_val[:,0]/10000
-pca_val[:,1] = (pca_val[:,1]/1000)
+pca_val[:,0] = pca_val[:,0]/5000
+pca_val[:,1] = (pca_val[:,1]/500)
 pca_val[:,2] = (pca_val[:,2]/100)
 pca = pca_val[:400]
 #pca = np.concatenate((pca, pca), axis=0)
