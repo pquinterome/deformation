@@ -26,26 +26,26 @@ from numpy import interp
 from sklearn.decomposition import PCA
 #
 #########Inputs and Outputs##########
-pca_val= np.load('inputs/sample.npy',allow_pickle=True)/10000
+pca_val= np.load('inputs/sample.npy',allow_pickle=True)
 pca_val[:,0] = pca_val[:,0]/max(pca_val[:,0])
 pca_val[:,1] = (pca_val[:,1])/max(pca_val[:,1])
 pca_val[:,2] = (pca_val[:,2])/max(pca_val[:,2])
 pca = pca_val[:800]
-#pca = np.concatenate((pca, pca), axis=0)
+pca = np.concatenate((pca, pca), axis=0)
 #pca = pca[:,0]
 print('labels_size',pca.shape)
 image_1= np.load('inputs/images_1.npy', allow_pickle=True)
 image_2= np.load('inputs/images_2.npy', allow_pickle=True)
 image_1 = np.concatenate((image_1,image_2), axis=0)
 image_1=image_1[:800]
-#image_1 = np.concatenate((image_1,image_1), axis=0)
+image_1 = np.concatenate((image_1,image_1), axis=0)
 image = image_1[:,:58,50:-50,50:-50]
 print('Inputs_size', image_1.shape)
 X_train, X_test, y_train, y_test = train_test_split(image, pca, test_size=0.2, random_state=1)
 print(X_train.shape)
 print(X_test.shape)
-X_train = X_train.reshape(640, 58, 156, 156,1)
-X_test = X_test.reshape(160, 58, 156, 156,1)
+X_train = X_train.reshape(1280, 58, 156, 156,1)
+X_test = X_test.reshape(320, 58, 156, 156,1)
 batch_size=10
 # Prepare the training dataset.
 train_dataset = tf.data.Dataset.from_tensor_slices((X_train, y_train))
