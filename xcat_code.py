@@ -27,7 +27,7 @@ from sklearn.decomposition import PCA
 #
 #########Inputs and Outputs##########
 pca_val= np.load('inputs/sample.npy',allow_pickle=True)
-pca_val[:,0] = pca_val[:,0]/max(pca_val[:,0])
+pca_val[:,0] = (pca_val[:,0])/max(pca_val[:,0])
 pca_val[:,1] = (pca_val[:,1])/max(pca_val[:,1])
 pca_val[:,2] = (pca_val[:,2])/max(pca_val[:,2])
 pca = pca_val[:800]
@@ -72,7 +72,7 @@ x = BatchNormalization()(x)
 x = Dropout(0.3)(x)
 x = Flatten()(x)
 x = Dense(180, activation='relu')(x)
-#x = Dense(180, activation='relu')(x)
+x = Dense(180, activation='relu')(x)
 #x = Dense(180, activation='relu')(x)
 #x = Dropout(0.3)(x)
 x = Dense(90, activation='relu')(x)
