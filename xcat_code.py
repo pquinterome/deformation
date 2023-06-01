@@ -48,10 +48,10 @@ X_train = X_train.reshape(640, 58, 156, 156,1)
 X_test = X_test.reshape(160, 58, 156, 156,1)
 batch_size=10
 # Prepare the training dataset.
-train_dataset = tf.data.Dataset.from_tensor_slices((X_train, y_train))
+#train_dataset = tf.data.Dataset.from_tensor_slices((X_train, y_train))
 #train_dataset = train_dataset.shuffle(buffer_size=1024).batch(batch_size)
 # Prepare the validation dataset.
-val_dataset = tf.data.Dataset.from_tensor_slices((X_test, y_test))
+#val_dataset = tf.data.Dataset.from_tensor_slices((X_test, y_test))
 #val_dataset = val_dataset.batch(batch_size)
 ############Model##################
 i = Input(shape=(58, 156, 156, 1))
@@ -82,8 +82,8 @@ model = Model(i, x)
 model.compile(loss='mean_squared_error', optimizer= "adam", metrics=['mean_absolute_error'])
 early_stop = EarlyStopping(monitor='val_loss', patience=5, mode='min')
 ############Model Fit###############
-history = model.fit(train_dataset, validation_data= val_dataset, batch_size=10, epochs=100, callbacks=[early_stop], verbose=2)
-#history = model.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), batch_size=10, epochs=100, callbacks=[early_stop], verbose=1)
+#history = model.fit(train_dataset, validation_data= val_dataset, batch_size=10, epochs=100, callbacks=[early_stop], verbose=2)
+history = model.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), batch_size=10, epochs=100, callbacks=[early_stop], verbose=1)
 pred = model.predict(X_test)
 print('Total mae', mae(y_test, pred))
 print(pred)
