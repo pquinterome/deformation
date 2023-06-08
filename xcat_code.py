@@ -56,7 +56,7 @@ batch_size=10
 ############Model##################
 i = Input(shape=(58, 156, 156, 1))
 x = Conv3D(filters=64, kernel_size=(6,6,6), activation='relu', padding='same')(i)
-#x = Conv3D(filters=64, kernel_size=(6,6,6), activation='relu', padding='same')(x)
+x = Conv3D(filters=64, kernel_size=(6,6,6), activation='relu', padding='same')(x)
 x = MaxPool3D(pool_size=(6,6,6))(x)
 x = BatchNormalization()(x)
 #x = Dropout(0.1)(x)
