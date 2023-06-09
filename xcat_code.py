@@ -82,7 +82,9 @@ model.compile(loss='mean_squared_error', optimizer= "adam", metrics=['mean_absol
 early_stop = EarlyStopping(monitor='val_loss', patience=5, mode='min')
 ############Model Fit###############
 #history = model.fit(train_dataset, validation_data= val_dataset, batch_size=10, epochs=100, callbacks=[early_stop], verbose=2)
-history = model.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), batch_size=20, epochs=100, callbacks=[early_stop], verbose=1)
+model.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), batch_size=20, epochs=100, callbacks=[early_stop], verbose=1)
+model.save('model_1_reg.h5')
+
 pred = model.predict(X_test)
 print('Total mae', mae(y_test, pred))
 print(pred)
