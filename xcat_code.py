@@ -64,6 +64,10 @@ x = Conv3D(filters=32, kernel_size=(3,3,3), activation='relu', padding='same')(x
 #x = Conv3D(filters=32, kernel_size=(3,3,3), activation='relu', padding='same')(x)
 x = MaxPool3D(pool_size=(3,3,3))(x)
 x = BatchNormalization()(x)
+
+x = Conv3D(filters=32, kernel_size=(3,3,3), activation='relu', padding='same')(x)
+x = MaxPool3D(pool_size=(3,3,3))(x)
+x = BatchNormalization()(x)
 #x = Dropout(0.1)(x)
 x = Conv3D(filters=12, kernel_size=(3,3,3), activation='relu', padding='same')(x)
 #x = Conv3D(filters=12, kernel_size=(3,3,3), activation='relu', padding='same')(x)
