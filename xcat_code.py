@@ -27,9 +27,9 @@ from sklearn.decomposition import PCA
 #
 #########Inputs and Outputs##########
 pca_val= np.load('inputs/sample.npy',allow_pickle=True)
-#pca_val[:,0] = (pca_val[:,0])/max(pca_val[:,0])
-#pca_val[:,1] = (pca_val[:,1])/max(pca_val[:,1])
-#pca_val[:,2] = (pca_val[:,2])/max(pca_val[:,2])
+pca_val[:,0] = (pca_val[:,0])/max(pca_val[:,0])
+pca_val[:,1] = (pca_val[:,1])/max(pca_val[:,1])
+pca_val[:,2] = (pca_val[:,2])/max(pca_val[:,2])
 pca = pca_val[:400]
 #pca = np.concatenate((pca, pca), axis=0)
 #pca = pca[:,0]
@@ -56,19 +56,16 @@ val_dataset = val_dataset.batch(batch_size)
 ############Model##################
 i = Input(shape=(58, 156, 156, 1))
 x = Conv3D(filters=64, kernel_size=(6,6,6), activation='relu', padding='same')(i)
-x = Conv3D(filters=64, kernel_size=(6,6,6), activation='relu', padding='same')(x)
-x = MaxPool3D(pool_size=(3,3,3))(x)
+x = MaxPool3D(pool_size=(6,6,6))(x)
 x = BatchNormalization()(x)
 #x = Dropout(0.1)(x)
 x = Conv3D(filters=32, kernel_size=(3,3,3), activation='relu', padding='same')(x)
-x = Conv3D(filters=32, kernel_size=(3,3,3), activation='relu', padding='same')(x)
 x = MaxPool3D(pool_size=(3,3,3))(x)
 x = BatchNormalization()(x)
-
+#x = Dropout(0.1)(x)
 x = Conv3D(filters=12, kernel_size=(3,3,3), activation='relu', padding='same')(x)
 x = MaxPool3D(pool_size=(3,3,3))(x)
 x = BatchNormalization()(x)
-
 #x = Dropout(0.1)(x)
 x = Flatten()(x)
 x = Dense(180, activation='relu')(x)
