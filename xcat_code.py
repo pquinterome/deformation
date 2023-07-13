@@ -205,3 +205,5 @@ sns.regplot(data=new_dfw, y='Predicted Values', x='True Values', scatter_kws=dic
 ax.errorbar(data=new_dfw, y='Predicted Values', x='True Values', yerr=new_dfw['Standard Deviation'], fmt='none', capsize=0,  color='gray')
 plt.xlim(-0.1,1.1)
 plt.savefig('PTV_model_performance.png', bbox_inches='tight')
+print(y_test)
+print(predy)
