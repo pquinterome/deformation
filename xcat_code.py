@@ -168,8 +168,8 @@ early_stop = EarlyStopping(monitor='val_loss', patience=3)
 models= [model1, model1, model1, model1, model1]
 x = ptv
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2) #random_state=1
-X_train = X_train.reshape(800, 80, 256, 1)
-X_test = X_test.reshape(200, 80, 256, 1)
+X_train = X_train.reshape(800, 80, 256, 256, 1)
+X_test = X_test.reshape(200, 80, 256, 256, 1)
 predictions=[]
 mean_abs_err=[]
 root_mean_sq=[]
@@ -217,8 +217,8 @@ print('***PTV_Model: DONE***')
 #models= [model1, model1, model1, model1, model1]
 x = liver
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2) #random_state=1
-X_train = X_train.reshape(800, 80, 256, 1)
-X_test = X_test.reshape(200, 80, 256, 1)
+X_train = X_train.reshape(800, 80, 256, 256, 1)
+X_test = X_test.reshape(200, 80, 256, 256, 1)
 predictions=[]
 mean_abs_err=[]
 root_mean_sq=[]
@@ -267,8 +267,8 @@ print('***LIVER_Model: DONE***')
 models= [model1, model1, model1, model1, model1]
 x = mri
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2) #random_state=1
-X_train = X_train.reshape(800, 80, 256, 1)
-X_test = X_test.reshape(200, 80, 256, 1)
+X_train = X_train.reshape(800, 80, 256, 256, 1)
+X_test = X_test.reshape(200, 80, 256, 256, 1)
 predictions=[]
 mean_abs_err=[]
 root_mean_sq=[]
