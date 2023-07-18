@@ -165,7 +165,61 @@ model3.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_abso
 early_stop = EarlyStopping(monitor='val_loss', patience=3)
 #
 #
+#
+#
+#
+#
+#
+#
 models= [model1, model1, model1, model1, model1]
+x = mri
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2) #random_state=1
+X_train = X_train.reshape(800, 80, 256, 256, 1)
+X_test = X_test.reshape(200, 80, 256, 256, 1)
+predictions=[]
+mean_abs_err=[]
+root_mean_sq=[]
+r=[]
+fig3, ax3 = plt.subplots()
+for model in models:   
+    model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=0, batch_size=10)
+    pred = model1.predict(X_test)
+    s = r2_score(y_test, pred)
+    b = mae(y_test, pred)
+    #print('MAE-->>', mae(y_test, pred))
+    a = sqrt(metrics.mean_squared_error(y_test, pred.ravel()))
+    #print('MSE-->>', a)
+    predictions.append(pred.ravel())
+    mean_abs_err.append(b)
+    root_mean_sq.append(a)
+    r.append(s)
+me = np.array(mean_abs_err)
+rs = np.array(root_mean_sq)
+predy = np.array(predictions)
+r2 = np.array(r)
+k1 = predy.mean(axis=0)
+k2 = predy.std(axis=0)
+new_dfw = pd.DataFrame({'Predicted Values':k1, 'True Values':y_test, 'Standard Deviation':k2})
+plt.plot([1, -1], [1, -1], linestyle='--', lw=1, color='k', alpha=.15)
+plt.plot([-0.95, 1], [-1, 0.95], 'r--', linewidth=0.8, alpha=.15)
+plt.plot([-1, 0.95], [-0.95, 1], 'r--', linewidth=0.8, alpha=.15, label='$\pm$ 5%')
+plt.annotate("$r^2$ = {:.2f}".format(r2.mean())+'$\pm$= {:.2f}'.format(r2.std()), (-1, 0.9))
+plt.plot([-0.90, 1], [-1, 0.90], 'r--', linewidth=0.8, alpha=.3)
+plt.plot([-1, 0.90], [-0.90, 1], 'r--', linewidth=0.8, alpha=.3, label='$\pm$ 10%')
+sns.regplot(data=new_dfw, y='Predicted Values', x='True Values', scatter_kws=dict(color='k', s=20, alpha=1, marker='*'), line_kws=dict(color='orange', alpha=0.9))
+ax.errorbar(data=new_dfw, y='Predicted Values', x='True Values', yerr=new_dfw['Standard Deviation'], fmt='none', capsize=0,  color='gray')
+plt.xlim(-1.1,1.1)
+plt.savefig('outputs/MRI_model_performance.png', bbox_inches='tight')
+print('MRI_MODEL')
+print('y_test', y_test)
+print('Predictions', predy)
+print('MAE', me)
+print('RMSE', rs)
+print('***MRI_Model: DONE***')
+#
+#
+#
+#models= [model1, model1, model1, model1, model1]
 x = ptv
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2) #random_state=1
 X_train = X_train.reshape(800, 80, 256, 256, 1)
@@ -259,53 +313,3 @@ print('Predictions', predy)
 print('MAE', me)
 print('RMSE', rs)
 print('***LIVER_Model: DONE***')
-#
-#
-#
-#
-#
-models= [model1, model1, model1, model1, model1]
-x = mri
-X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2) #random_state=1
-X_train = X_train.reshape(800, 80, 256, 256, 1)
-X_test = X_test.reshape(200, 80, 256, 256, 1)
-predictions=[]
-mean_abs_err=[]
-root_mean_sq=[]
-r=[]
-fig3, ax3 = plt.subplots()
-for model in models:   
-    model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=0, batch_size=10)
-    pred = model1.predict(X_test)
-    s = r2_score(y_test, pred)
-    b = mae(y_test, pred)
-    #print('MAE-->>', mae(y_test, pred))
-    a = sqrt(metrics.mean_squared_error(y_test, pred.ravel()))
-    #print('MSE-->>', a)
-    predictions.append(pred.ravel())
-    mean_abs_err.append(b)
-    root_mean_sq.append(a)
-    r.append(s)
-me = np.array(mean_abs_err)
-rs = np.array(root_mean_sq)
-predy = np.array(predictions)
-r2 = np.array(r)
-k1 = predy.mean(axis=0)
-k2 = predy.std(axis=0)
-new_dfw = pd.DataFrame({'Predicted Values':k1, 'True Values':y_test, 'Standard Deviation':k2})
-plt.plot([1, -1], [1, -1], linestyle='--', lw=1, color='k', alpha=.15)
-plt.plot([-0.95, 1], [-1, 0.95], 'r--', linewidth=0.8, alpha=.15)
-plt.plot([-1, 0.95], [-0.95, 1], 'r--', linewidth=0.8, alpha=.15, label='$\pm$ 5%')
-plt.annotate("$r^2$ = {:.2f}".format(r2.mean())+'$\pm$= {:.2f}'.format(r2.std()), (-1, 0.9))
-plt.plot([-0.90, 1], [-1, 0.90], 'r--', linewidth=0.8, alpha=.3)
-plt.plot([-1, 0.90], [-0.90, 1], 'r--', linewidth=0.8, alpha=.3, label='$\pm$ 10%')
-sns.regplot(data=new_dfw, y='Predicted Values', x='True Values', scatter_kws=dict(color='k', s=20, alpha=1, marker='*'), line_kws=dict(color='orange', alpha=0.9))
-ax.errorbar(data=new_dfw, y='Predicted Values', x='True Values', yerr=new_dfw['Standard Deviation'], fmt='none', capsize=0,  color='gray')
-plt.xlim(-1.1,1.1)
-plt.savefig('outputs/MRI_model_performance.png', bbox_inches='tight')
-print('MRI_MODEL')
-print('y_test', y_test)
-print('Predictions', predy)
-print('MAE', me)
-print('RMSE', rs)
-print('***MRI_Model: DONE***')
