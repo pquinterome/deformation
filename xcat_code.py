@@ -34,8 +34,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 #########Inputs and Outputs##########
 y= np.load('inputs/sample.npy',allow_pickle=True)
 y = y[:,0]
-v1 = y + abs(y.min())
-y = np.round(v1/v1.max(), 2)
+y = np.array([-y[i]/y.min() if y[i]<0 else y[i]/y.max() for i in range(len(y))])
 print('Output Size', y.shape)
 
 mri_1= np.load('inputs/images_1.npy', allow_pickle=True)
@@ -208,6 +207,7 @@ plt.savefig('outputs/PTV_model_performance.png', bbox_inches='tight')
 print('PTV_MODEL')
 print('y_test', y_test)
 print('Predictions', predy)
+print('***PTV_Model: DONE***')
 #
 #
 #
@@ -254,6 +254,7 @@ plt.savefig('outputs/LIVER_model_performance.png', bbox_inches='tight')
 print('LIVER_MODEL')
 print('y_test', y_test)
 print('Predictions', predy)
+print('***LIVER_Model: DONE***')
 #
 #
 #
@@ -301,3 +302,4 @@ plt.savefig('outputs/MRI_model_performance.png', bbox_inches='tight')
 print('MRI_MODEL')
 print('y_test', y_test)
 print('Predictions', predy)
+print('***MRI_Model: DONE***')
