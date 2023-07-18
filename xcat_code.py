@@ -115,8 +115,8 @@ plt.savefig('outputs/Sanity_check.png', bbox_inches='tight')
 i = Input(shape=(80, 256, 256, 1))
 x = Conv3D(filters=164, kernel_size=(8,8,8), activation='relu', padding='same')(i)
 x = MaxPool3D(pool_size=(8,8,8))(x)
-x = Conv3D(filters=64, kernel_size=(6,6,8), activation='relu', padding='same')(x)
-x = MaxPool3D(pool_size=(6,6,8))(x)
+x = Conv3D(filters=64, kernel_size=(6,6,6), activation='relu', padding='same')(x)
+x = MaxPool3D(pool_size=(6,6,6))(x)
 x = Flatten()(x)
 x = Dense(832, activation='relu')(x)
 x = Dense(190, activation='relu')(x)
@@ -169,7 +169,7 @@ models= [model1, model1, model1, model1, model1]
 x = ptv
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2) #random_state=1
 X_train = X_train.reshape(800, 80, 256, 256, 1)
-X_test = X_test.reshape(200, 80, 256, 256, 1)
+X_test  = X_test.reshape(200, 80, 256, 256, 1)
 predictions=[]
 mean_abs_err=[]
 root_mean_sq=[]
