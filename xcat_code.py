@@ -176,7 +176,7 @@ root_mean_sq=[]
 r=[]
 fig2, ax = plt.subplots()
 for model in models:   
-    model3.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=0, batch_size=10)
+    model3.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=10)
     pred = model3.predict(X_test)
     s = r2_score(y_test, pred)
     b = mae(y_test, pred)
