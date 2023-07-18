@@ -176,9 +176,10 @@ print(X_train.shape)
 print(X_test.shape)
 X_train = X_train.reshape(800, 80, 256, 256, 1)
 X_test = X_test.reshape(200, 80, 256, 256, 1)
+print(X_train.shape)
+print(X_test.shape)
 
-
-history= model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=10)
+history= model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1)
 pred = (model1.predict(X_test)).ravel()
 
 
