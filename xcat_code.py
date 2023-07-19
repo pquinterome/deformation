@@ -207,7 +207,7 @@ model.compile(loss='mean_squared_error', optimizer= adam, metrics=['mean_absolut
 early_stop = EarlyStopping(monitor='val_loss', patience=3)
 #
 #history = model.fit(train_dataset, validation_data= val_dataset, epochs=100, callbacks=[early_stop], verbose=1)
-history= model.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1)
+history= model.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=5)
 pred = (model.predict(X_test)).ravel()
 #
 #
