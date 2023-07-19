@@ -49,16 +49,16 @@ mri = np.concatenate((mri_1, mri_2))
 print('MRI_size', mri.shape)
 
 liver1 = np.load('inputs/im_liver_1.npy',allow_pickle=True)
-y1 = liver1[:100]
+liver1 = liver1[:100]
 liver2 = np.load('inputs/im_liver_2.npy',allow_pickle=True)
-y2 = liver2[-100:]
+liver2 = liver2[-100:]
 liver = np.concatenate((liver1,liver2))
 #liver = np.array([liver[i][:,125,:] for i in range(len(liver))])
 print('LIVER_size', liver.shape)
 ptv1 = np.load('inputs/im_ptv_1.npy',allow_pickle=True)
-y1 = ptv1[:100]
+ptv1 = ptv1[:100]
 ptv2 = np.load('inputs/im_ptv_2.npy',allow_pickle=True)
-y2 = ptv2[-100:]
+ptv2 = ptv2[-100:]
 ptv = np.concatenate((ptv1,ptv2))
 #ptv = np.array([ptv[i][:,125,:] for i in range(len(ptv))])
 print('PTV_size', ptv.shape)
@@ -163,8 +163,8 @@ plt.savefig('outputs/Sanity_check.png', bbox_inches='tight')
 #
 #
 #models= [model1, model1, model1, model1, model1]
-x = mri
-X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2) #random_state=1
+xw = mri
+X_train, X_test, y_train, y_test = train_test_split(xw, y, test_size=0.2) #random_state=1
 print(X_train.shape)
 print(X_test.shape)
 X_train = X_train.reshape(160, 80, 256, 256, 1)
@@ -186,14 +186,14 @@ x = Dense(190, activation='relu')(x)
 x = Dense(85, activation='relu')(x)
 x = Dense(20, activation='relu')(x)
 x = Dense(1, activation='linear')(x)
-model1 = Model(i, x)
+model = Model(i, x)
 #model.summary()
 #adam = tf.keras.optimizers.Adam(learning_rate=0.01, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
-model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
+model.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
 early_stop = EarlyStopping(monitor='val_loss', patience=3)
 #
-history= model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1)
-pred = (model1.predict(X_test)).ravel()
+history= model.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1)
+pred = (model.predict(X_test)).ravel()
 #
 #
 #
