@@ -37,31 +37,31 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 #########Inputs and Outputs##########
 y= np.load('inputs/sample.npy',allow_pickle=True)
 y = y[:,0]
-y1 = y[:100]
-y2 = y[-100:]
+y1 = y[:500]
+y2 = y[-500:]
 y = np.concatenate((y1,y2))
 y = np.array([-y[i]/y.min() if y[i]<0 else y[i]/y.max() for i in range(len(y))])
 print('Output Size', y.shape)
 
 mri_1= np.load('inputs/images_1.npy', allow_pickle=True)
-mri_1 = mri_1[:100]
+mri_1 = mri_1[:500]
 mri_2 = np.load('inputs/images_2.npy',allow_pickle=True)
-mri_2 = mri_2[-100:]
+mri_2 = mri_2[-500:]
 mri = np.concatenate((mri_1, mri_2))
 #mri = np.array([mri[i][:,125,:] for i in range(len(mri))])
 print('MRI_size', mri.shape)
 
 liver1 = np.load('inputs/im_liver_1.npy',allow_pickle=True)
-liver1 = liver1[:100]
+liver1 = liver1[:500]
 liver2 = np.load('inputs/im_liver_2.npy',allow_pickle=True)
-liver2 = liver2[-100:]
+liver2 = liver2[-500:]
 liver = np.concatenate((liver1,liver2))
 #liver = np.array([liver[i][:,125,:] for i in range(len(liver))])
 print('LIVER_size', liver.shape)
 ptv1 = np.load('inputs/im_ptv_1.npy',allow_pickle=True)
-ptv1 = ptv1[:100]
+ptv1 = ptv1[:500]
 ptv2 = np.load('inputs/im_ptv_2.npy',allow_pickle=True)
-ptv2 = ptv2[-100:]
+ptv2 = ptv2[-500:]
 ptv = np.concatenate((ptv1,ptv2))
 #ptv = np.array([ptv[i][:,125,:] for i in range(len(ptv))])
 print('PTV_size', ptv.shape)
@@ -170,8 +170,8 @@ xw = mri
 X_train, X_test, y_train, y_test = train_test_split(xw, y, test_size=0.2) #random_state=1
 print(X_train.shape)
 print(X_test.shape)
-X_train = X_train.reshape(160, 80, 256, 256, 1)
-X_test = X_test.reshape(40, 80, 256, 256, 1)
+X_train = X_train.reshape(800, 80, 256, 256, 1)
+X_test = X_test.reshape(200, 80, 256, 256, 1)
 print(X_train.shape)
 print(X_test.shape)
 #
@@ -274,7 +274,7 @@ new_dfw = pd.DataFrame({'Predicted Values':k1, 'True Values':y_test, 'Standard D
 plt.plot([1, -1], [1, -1], linestyle='--', lw=1, color='k', alpha=.15)
 plt.plot([-0.95, 1], [-1, 0.95], 'r--', linewidth=0.8, alpha=.15)
 plt.plot([-1, 0.95], [-0.95, 1], 'r--', linewidth=0.8, alpha=.15, label='$\pm$ 5%')
-plt.annotate("$r^2$ = {:.2f}".format(r2.mean())+'$\pm$= {:.2f}'.format(r2.std()), (-1, 0.9))
+plt.annotate("$r^2$ = {:.2f}".format(r2.mean())+'$\pm$ {:.2f}'.format(r2.std()), (-1, 0.9))
 plt.plot([-0.90, 1], [-1, 0.90], 'r--', linewidth=0.8, alpha=.3)
 plt.plot([-1, 0.90], [-0.90, 1], 'r--', linewidth=0.8, alpha=.3, label='$\pm$ 10%')
 sns.regplot(data=new_dfw, y='Predicted Values', x='True Values', scatter_kws=dict(color='k', s=20, alpha=1, marker='*'), line_kws=dict(color='orange', alpha=0.9))
