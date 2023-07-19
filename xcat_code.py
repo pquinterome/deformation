@@ -189,9 +189,9 @@ val_dataset = val_dataset.batch(batch_size)
 #
 # Model for MRI
 i = Input(shape=(80, 256, 256, 1))
-x = Conv3D(filters=64, kernel_size=(8,8,8), activation='relu', padding='same')(i)
+x = Conv3D(filters=164, kernel_size=(8,8,8), activation='relu', padding='same')(i)
 x = MaxPool3D(pool_size=(8,8,8))(x)
-x = Conv3D(filters=32, kernel_size=(6,6,6), activation='relu', padding='same')(x)
+x = Conv3D(filters=64, kernel_size=(6,6,6), activation='relu', padding='same')(x)
 x = MaxPool3D(pool_size=(6,6,6))(x)
 x = Flatten()(x)
 x = Dense(832, activation='relu')(x)
