@@ -39,6 +39,7 @@ y1 = y[:50]
 y2 = y[-50:]
 y = np.concatenate((y1,y2))
 y = np.array([-y[i]/y.min() if y[i]<0 else y[i]/y.max() for i in range(len(y))])
+y = y.reshape(100)
 print('Output Size', y.shape)
 
 mri_1= np.load('inputs/images_1.npy', allow_pickle=True)
