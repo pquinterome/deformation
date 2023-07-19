@@ -34,22 +34,31 @@ from tensorflow.keras.callbacks import EarlyStopping
 #########Inputs and Outputs##########
 y= np.load('inputs/sample.npy',allow_pickle=True)
 y = y[:,0]
+y1 = y[:100]
+y2 = y[-100:]
+y = np.concatenate((y1,y2))
 y = np.array([-y[i]/y.min() if y[i]<0 else y[i]/y.max() for i in range(len(y))])
 print('Output Size', y.shape)
 
 mri_1= np.load('inputs/images_1.npy', allow_pickle=True)
+mri_1 = mri_1[:100]
 mri_2 = np.load('inputs/images_2.npy',allow_pickle=True)
+mri_2 = mri_2[-100:]
 mri = np.concatenate((mri_1, mri_2))
 #mri = np.array([mri[i][:,125,:] for i in range(len(mri))])
 print('MRI_size', mri.shape)
 
 liver1 = np.load('inputs/im_liver_1.npy',allow_pickle=True)
+y1 = liver1[:100]
 liver2 = np.load('inputs/im_liver_2.npy',allow_pickle=True)
+y2 = liver2[-100:]
 liver = np.concatenate((liver1,liver2))
 #liver = np.array([liver[i][:,125,:] for i in range(len(liver))])
 print('LIVER_size', liver.shape)
 ptv1 = np.load('inputs/im_ptv_1.npy',allow_pickle=True)
+y1 = ptv1[:100]
 ptv2 = np.load('inputs/im_ptv_2.npy',allow_pickle=True)
+y2 = ptv2[-100:]
 ptv = np.concatenate((ptv1,ptv2))
 #ptv = np.array([ptv[i][:,125,:] for i in range(len(ptv))])
 print('PTV_size', ptv.shape)
@@ -57,7 +66,7 @@ print('PTV_size', ptv.shape)
 fig = plt.figure(1)
 plt.figure(figsize=(23,8))
 plt.subplot(2,5,1)
-i= random.randrange(0,999)
+i= random.randrange(0,50)
 print(i)
 plt.imshow(mri[i][:,125,:], cmap='gray', aspect= 'auto') 
 plt.contour(liver[i][:,125,:])
@@ -70,7 +79,7 @@ plt.axhline(y=40, color='r', linestyle=':', lw=1)
 plt.ylim(0,80)
 plt.title(i)
 plt.subplot(2,5,2)
-i= random.randrange(0,999)
+i= random.randrange(50,100)
 print(i)
 plt.imshow(mri[i][:,125,:], cmap='gray', aspect= 'auto') 
 plt.contour(liver[i][:,125,:])
@@ -83,7 +92,7 @@ plt.axhline(y=40, color='r', linestyle=':', lw=1)
 plt.ylim(0,80)
 plt.title(i)
 plt.subplot(2,5,3)
-i= random.randrange(500,999)
+i= random.randrange(100,150)
 print(i)
 plt.imshow(mri[i][:,125,:], cmap='gray', aspect= 'auto') 
 plt.contour(liver[i][:,125,:])
@@ -96,7 +105,7 @@ plt.axhline(y=40, color='r', linestyle=':', lw=1)
 plt.ylim(0,80)
 plt.title(i)
 plt.subplot(2,5,4)
-i= random.randrange(500,999)
+i= random.randrange(150,200)
 print(i)
 plt.imshow(mri[i][:,125,:], cmap='gray', aspect= 'auto') 
 plt.contour(liver[i][:,125,:])
@@ -111,23 +120,7 @@ plt.title(i)
 plt.savefig('outputs/Sanity_check.png', bbox_inches='tight')
 #
 #
-# Model for MRI
-i = Input(shape=(80, 256, 256, 1))
-x = Conv3D(filters=164, kernel_size=(8,8,8), activation='relu', padding='same')(i)
-x = MaxPool3D(pool_size=(8,8,8))(x)
-x = Conv3D(filters=64, kernel_size=(6,6,6), activation='relu', padding='same')(x)
-x = MaxPool3D(pool_size=(6,6,6))(x)
-x = Flatten()(x)
-x = Dense(832, activation='relu')(x)
-x = Dense(190, activation='relu')(x)
-x = Dense(85, activation='relu')(x)
-x = Dense(20, activation='relu')(x)
-x = Dense(1, activation='linear')(x)
-model1 = Model(i, x)
-#model.summary()
-#adam = tf.keras.optimizers.Adam(learning_rate=0.01, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
-model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
-early_stop = EarlyStopping(monitor='val_loss', patience=3)
+
 #
 ## Model for LIVER
 #i = Input(shape=(80, 256, 256, 1))
@@ -174,16 +167,36 @@ x = mri
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2) #random_state=1
 print(X_train.shape)
 print(X_test.shape)
-X_train = X_train.reshape(800, 80, 256, 256, 1)
-X_test = X_test.reshape(200, 80, 256, 256, 1)
+X_train = X_train.reshape(160, 80, 256, 256, 1)
+X_test = X_test.reshape(40, 80, 256, 256, 1)
 print(X_train.shape)
 print(X_test.shape)
-
+#
+#
+#
+# Model for MRI
+i = Input(shape=(80, 256, 256, 1))
+x = Conv3D(filters=164, kernel_size=(8,8,8), activation='relu', padding='same')(i)
+x = MaxPool3D(pool_size=(8,8,8))(x)
+x = Conv3D(filters=64, kernel_size=(6,6,6), activation='relu', padding='same')(x)
+x = MaxPool3D(pool_size=(6,6,6))(x)
+x = Flatten()(x)
+x = Dense(832, activation='relu')(x)
+x = Dense(190, activation='relu')(x)
+x = Dense(85, activation='relu')(x)
+x = Dense(20, activation='relu')(x)
+x = Dense(1, activation='linear')(x)
+model1 = Model(i, x)
+#model.summary()
+#adam = tf.keras.optimizers.Adam(learning_rate=0.01, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
+model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
+early_stop = EarlyStopping(monitor='val_loss', patience=3)
+#
 history= model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1)
 pred = (model1.predict(X_test)).ravel()
-
-
-
+#
+#
+#
 fig = plt.figure(1)
 plt.figure(figsize=(20,18))
 plt.subplot(3,4,1)
