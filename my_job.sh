@@ -1,9 +1,8 @@
 #!/bin/bash
-#BSUB -m pllimphsing4.mskcc
-#BSUB -n 12                     # 24 cores
-#BSUB -gpu "num=1:mode=exclusive_process:mps=no:j_exclusive=yes"
+#BSUB -n 120                     # 24 cores
+#BSUB -gpu "num=4:mode=exclusive_process:mps=no:j_exclusive=yes"
 #BSUB -W 80:00                   # 80-hour run-time
-#BSUB -R "rusage[mem=64GB]"     # 4000 MB per core
+#BSUB -R "rusage[mem=240GB]"     # 4000 MB per core
 #BSUS -q research
 #BSUB -J phantom
 #BSUB -o model.out
