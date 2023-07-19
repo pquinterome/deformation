@@ -31,6 +31,8 @@ from tensorflow.keras.layers import Input, Dense, Conv2D, Conv3D, MaxPool2D, Max
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import EarlyStopping
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+
 #
 #########Inputs and Outputs##########
 y= np.load('inputs/sample.npy',allow_pickle=True)
@@ -205,8 +207,8 @@ adam = tf.keras.optimizers.Adam()
 model.compile(loss='mean_squared_error', optimizer= adam, metrics=['mean_absolute_error'])
 early_stop = EarlyStopping(monitor='val_loss', patience=3)
 #
-history = model.fit(train_dataset, validation_data= val_dataset, epochs=100, callbacks=[early_stop], verbose=1)
-#history= model.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1)
+#history = model.fit(train_dataset, validation_data= val_dataset, epochs=100, callbacks=[early_stop], verbose=1)
+history= model.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1)
 pred = (model.predict(X_test)).ravel()
 #
 #
