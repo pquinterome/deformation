@@ -177,7 +177,7 @@ print(X_test.shape)
 #
 #
 #
-batch_size=10
+batch_size=5
 # Prepare the training dataset.
 train_dataset = tf.data.Dataset.from_tensor_slices((X_train, y_train))
 train_dataset = train_dataset.shuffle(buffer_size=100).batch(batch_size)
