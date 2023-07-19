@@ -180,7 +180,7 @@ print(X_test.shape)
 batch_size=10
 # Prepare the training dataset.
 train_dataset = tf.data.Dataset.from_tensor_slices((X_train, y_train))
-train_dataset = train_dataset.shuffle(buffer_size=1024).batch(batch_size)
+train_dataset = train_dataset.shuffle(buffer_size=100).batch(batch_size)
 
 # Prepare the validation dataset.
 val_dataset = tf.data.Dataset.from_tensor_slices((X_test, y_test))
@@ -205,8 +205,8 @@ model.summary()
 model.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
 early_stop = EarlyStopping(monitor='val_loss', patience=3)
 #
-#history = model.fit(train_dataset, validation_data= val_dataset, epochs=100, callbacks=[early_stop], verbose=1)
-history= model.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=5)
+history = model.fit(train_dataset, validation_data= val_dataset, epochs=100, callbacks=[early_stop], verbose=1, batch_size=5)
+#history= model.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=5)
 pred = (model.predict(X_test)).ravel()
 #
 #
