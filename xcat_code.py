@@ -120,7 +120,7 @@ plt.axhline(y=50, color='r', linestyle='-', lw=1)
 plt.axhline(y=40, color='r', linestyle=':', lw=1)
 plt.ylim(0,80)
 plt.title(i)
-plt.savefig('outputs/Sanity_check.png', bbox_inches='tight')
+plt.savefig('Sanity_check.png', bbox_inches='tight')
 #
 #
 
