@@ -201,13 +201,12 @@ x = Dense(20, activation='relu')(x)
 x = Dense(1, activation='linear')(x)
 model = Model(i, x)
 model.summary()
-adam = tf.keras.optimizers.Adam()
 #adam = tf.keras.optimizers.Adam(learning_rate=0.01, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
-model.compile(loss='mean_squared_error', optimizer= adam, metrics=['mean_absolute_error'])
+model.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
 early_stop = EarlyStopping(monitor='val_loss', patience=3)
 #
 #history = model.fit(train_dataset, validation_data= val_dataset, epochs=100, callbacks=[early_stop], verbose=1)
-history= model.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=10)
+history= model.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=5)
 pred = (model.predict(X_test)).ravel()
 #
 #
