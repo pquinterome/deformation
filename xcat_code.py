@@ -41,7 +41,6 @@ y1 = y[:50]
 y2 = y[-50:]
 y = np.concatenate((y1,y2))
 y = np.array([-y[i]/y.min() if y[i]<0 else y[i]/y.max() for i in range(len(y))])
-y = y.reshape(100)
 print('Output Size', y.shape)
 
 mri_1= np.load('inputs/images_1.npy', allow_pickle=True)
@@ -190,9 +189,9 @@ val_dataset = val_dataset.batch(batch_size)
 #
 # Model for MRI
 i = Input(shape=(80, 256, 256, 1))
-x = Conv3D(filters=164, kernel_size=(8,8,8), activation='relu', padding='same')(i)
+x = Conv3D(filters=64, kernel_size=(8,8,8), activation='relu', padding='same')(i)
 x = MaxPool3D(pool_size=(8,8,8))(x)
-x = Conv3D(filters=64, kernel_size=(6,6,6), activation='relu', padding='same')(x)
+x = Conv3D(filters=32, kernel_size=(6,6,6), activation='relu', padding='same')(x)
 x = MaxPool3D(pool_size=(6,6,6))(x)
 x = Flatten()(x)
 x = Dense(832, activation='relu')(x)
