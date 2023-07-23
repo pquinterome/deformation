@@ -231,7 +231,7 @@ plt.plot([-1, 0.90], [-0.90, 1], 'r--', linewidth=0.8, alpha=.3, label='$\pm$ 10
 plt.xlabel('True Values')
 plt.ylabel('Predicted Values')
 plt.legend();
-plt.savefig('Learning_curve.png', bbox_inches='tight')
+plt.savefig('outputs/Learning_curve.png', bbox_inches='tight')
 
 #model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=2, batch_size=5)
 model1.save('outputs/model_1_reg.h5')
@@ -314,12 +314,13 @@ plt.plot([-1, 0.90], [-0.90, 1], 'r--', linewidth=0.8, alpha=.3, label='$\pm$ 10
 sns.regplot(data=new_dfw, y='Predicted Values', x='True Values', scatter_kws=dict(color='k', s=20, alpha=1, marker='*'), line_kws=dict(color='orange', alpha=0.9))
 ax3.errorbar(data=new_dfw, y='Predicted Values', x='True Values', yerr=new_dfw['Standard Deviation'], fmt='none', capsize=0,  color='gray')
 plt.xlim(-1.1,1.1)
-plt.savefig('MRI_model_performance_3d.png', bbox_inches='tight')
+plt.savefig('outputs/MRI_model_performance_3d.png', bbox_inches='tight')
 print('MRI_MODEL')
-print('y_test', y_test)
-print('Predictions', predy)
-print('MAE', me)
-print('RMSE', rs)
+
+np.save('outputs/y_test.npy', y_test)
+np.save('outputs/predy.npy', predy)
+np.save('outputs/mae.npy', me)
+np.save('outputs/rmse.npy', rs)
 print('***MRI_Model: DONE***')
 #
 #
