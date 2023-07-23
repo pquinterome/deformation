@@ -205,6 +205,9 @@ model1.summary()
 model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
 early_stop = EarlyStopping(monitor='val_loss', patience=3)
 #
+model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=2, batch_size=5)
+model1.save('models/model_1_reg.h5')
+
 #history = model.fit(train_dataset, validation_data= val_dataset, epochs=100, callbacks=[early_stop], verbose=1, batch_size=5)
 #history= model.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=5)
 #pred = (model.predict(X_test)).ravel()
@@ -245,6 +248,8 @@ early_stop = EarlyStopping(monitor='val_loss', patience=3)
 #plt.legend()
 #plt.savefig('regression_plot.png', bbox_inches='tight')
 
+model1 = tf.keras.models.load_model('models/model_1_reg.h5')
+print('all ok (:')
 
 predictions=[]
 mean_abs_err=[]
