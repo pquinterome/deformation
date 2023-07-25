@@ -11,11 +11,12 @@
 
 
 #module purge
-module avail
-module load cuda
+#module avail
+#module load cuda
 
 #echo ">>> Installing Requirements";
 #conda run -n xcat pip install -r /cluster/home/quintep/deformation/requirements.txt
 echo ">>> Running Code";
+module load cuda
 python /cluster/home/quintep/deformation/xcat_code.py
 echo ">>> End";
