@@ -286,8 +286,14 @@ root_mean_sq=[]
 r=[]
 models= [model1, model1, model1, model1, model1]
 fig3, ax3 = plt.subplots()
-for model in models:   
-    model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=2, batch_size=5)
+for model in models:
+    xw = mri
+    X_train, X_test, y_train, y_test = train_test_split(xw, y, test_size=0.2) #random_state=1
+    print(X_train.shape)
+    print(X_test.shape)
+    X_train = X_train.reshape(800, 80, 256, 256, 1)
+    X_test = X_test.reshape(200, 80, 256, 256, 1)   
+    #model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=2, batch_size=5)
     pred = model1.predict(X_test)
     s = r2_score(y_test, pred)
     b = mae(y_test, pred)
