@@ -8,7 +8,7 @@
 #BSUB -o model.out
 #BSUB -e model.err
 #BSUB -N
-#BSUB -m pllimphsing1.mskcc
+
 
 #module purge
 module avail
