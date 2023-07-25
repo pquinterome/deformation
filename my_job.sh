@@ -10,7 +10,7 @@
 #BSUB -N
 
 #module purge
-#module load cuda
+module load cuda
 
 #echo ">>> Installing Requirements";
 #conda run -n xcat pip install -r /cluster/home/quintep/deformation/requirements.txt
