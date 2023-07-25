@@ -33,6 +33,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
+print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 #
 #########Inputs and Outputs##########
 y= np.load('inputs/sample.npy',allow_pickle=True)
