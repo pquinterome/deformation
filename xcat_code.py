@@ -32,7 +32,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import EarlyStopping
 import h5py
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+#os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 tf.config.list_physical_devices('GPU')
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
