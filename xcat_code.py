@@ -215,7 +215,7 @@ strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1"])
  #   history = model1.fit(train_dataset, validation_data= val_dataset, epochs=15, callbacks=[early_stop], verbose=1)
  #   model1.save('outputs/model_1_reg.h5')
 
-model1 = tf.keras.models.load_model('models/model_1_reg.h5')
+model1 = tf.keras.models.load_model('outputs/model_1_reg.h5')
 pred = model1.predict(X_test)
 #gc.collect()
 #history = model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=5)
