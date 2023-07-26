@@ -210,7 +210,7 @@ model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_abso
 early_stop = EarlyStopping(monitor='val_loss', patience=3)
 #
 #gc.collect()
-history = model1.fit(train_dataset, validation_data= val_dataset, epochs=20, callbacks=[early_stop], verbose=1)
+history = model1.fit(train_dataset, validation_data= val_dataset, epochs=15, callbacks=[early_stop], verbose=1)
 pred = model1.predict(X_test)
 #gc.collect()
 #history = model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=5)
