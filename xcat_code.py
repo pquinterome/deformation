@@ -209,7 +209,7 @@ model1.summary()
 model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
 early_stop = EarlyStopping(monitor='val_loss', patience=3)
 #
-history = model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=16)
+history = model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=8)
 pred = model1.predict(X_test)
 fig2 = plt.figure(2)
 plt.figure(figsize=(20,18))
