@@ -55,20 +55,20 @@ mri = np.concatenate((mri_1, mri_2))
 #mri = np.array([mri[i][:,125,:] for i in range(len(mri))])
 print('MRI_size', mri.shape)
 
-liver1 = np.load('inputs/im_liver_1.npy',allow_pickle=True)
-liver1 = liver1[:500]
-liver2 = np.load('inputs/im_liver_2.npy',allow_pickle=True)
-liver2 = liver2[-500:]
-liver = np.concatenate((liver1,liver2))
-#liver = np.array([liver[i][:,125,:] for i in range(len(liver))])
-print('LIVER_size', liver.shape)
-ptv1 = np.load('inputs/im_ptv_1.npy',allow_pickle=True)
-ptv1 = ptv1[:500]
-ptv2 = np.load('inputs/im_ptv_2.npy',allow_pickle=True)
-ptv2 = ptv2[-500:]
-ptv = np.concatenate((ptv1,ptv2))
-#ptv = np.array([ptv[i][:,125,:] for i in range(len(ptv))])
-print('PTV_size', ptv.shape)
+#liver1 = np.load('inputs/im_liver_1.npy',allow_pickle=True)
+#liver1 = liver1[:500]
+#liver2 = np.load('inputs/im_liver_2.npy',allow_pickle=True)
+#liver2 = liver2[-500:]
+#liver = np.concatenate((liver1,liver2))
+##liver = np.array([liver[i][:,125,:] for i in range(len(liver))])
+#print('LIVER_size', liver.shape)
+#ptv1 = np.load('inputs/im_ptv_1.npy',allow_pickle=True)
+#ptv1 = ptv1[:500]
+#ptv2 = np.load('inputs/im_ptv_2.npy',allow_pickle=True)
+#ptv2 = ptv2[-500:]
+#ptv = np.concatenate((ptv1,ptv2))
+##ptv = np.array([ptv[i][:,125,:] for i in range(len(ptv))])
+#print('PTV_size', ptv.shape)
 
 fig = plt.figure(1)
 plt.figure(figsize=(23,8))
@@ -208,7 +208,9 @@ model1.summary()
 model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
 early_stop = EarlyStopping(monitor='val_loss', patience=3)
 #
+gc.collect()
 history = model1.fit(train_dataset, validation_data= val_dataset, epochs=100, callbacks=[early_stop], verbose=1)
+gc.collect()
 #history = model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=5)
 pred = model1.predict(X_test)
 fig2 = plt.figure(2)
