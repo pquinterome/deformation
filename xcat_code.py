@@ -30,6 +30,7 @@ from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Input, Dense, Conv2D, Conv3D, MaxPool2D, MaxPool3D, Flatten, Dropout, GlobalMaxPooling3D, BatchNormalization
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import EarlyStopping
+import h5py
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 tf.config.list_physical_devices('GPU')
