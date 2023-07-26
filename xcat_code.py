@@ -32,8 +32,8 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.callbacks import EarlyStopping
 import h5py
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
-tf.config.list_physical_devices('GPU')
+#os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+#tf.config.list_physical_devices('GPU')
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 
@@ -212,7 +212,7 @@ model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_abso
 early_stop = EarlyStopping(monitor='val_loss', patience=3)
 #
 #gc.collect()
-history = model1.fit(train_dataset, validation_data= val_dataset, epochs=15, callbacks=[early_stop], verbose=1)
+history = model1.fit(train_dataset, validation_data= val_dataset, epochs=100, callbacks=[early_stop], verbose=1)
 model1.save('outputs/model_1_reg.h5')
 
 model1 = tf.keras.models.load_model('outputs/model_1_reg.h5')
