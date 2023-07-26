@@ -192,7 +192,7 @@ val_dataset = val_dataset.batch(batch_size)
 ##
 #
 strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1"])
-#with strategy.scope():
+with strategy.scope():
 #    # Model for MRI
 #    i = Input(shape=(80, 256, 256, 1))
 #    x = Conv3D(filters=64, kernel_size=(8,8,8), activation='relu', padding='same')(i)
@@ -215,8 +215,8 @@ strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1"])
  #   history = model1.fit(train_dataset, validation_data= val_dataset, epochs=15, callbacks=[early_stop], verbose=1)
  #   model1.save('outputs/model_1_reg.h5')
 
-model1 = tf.keras.models.load_model('outputs/model_1_reg.h5')
-pred = model1.predict(X_test)
+    model1 = tf.keras.models.load_model('outputs/model_1_reg.h5')
+    pred = model1.predict(X_test)
 #gc.collect()
 #history = model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=5)
 
