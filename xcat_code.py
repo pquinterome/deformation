@@ -191,7 +191,7 @@ val_dataset = tf.data.Dataset.from_tensor_slices((X_test, y_test))
 val_dataset = val_dataset.batch(batch_size)
 ##
 #
-strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1", "/gpu:2"])
+strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1"])
 with strategy.scope():
     # Model for MRI
     i = Input(shape=(80, 256, 256, 1))
