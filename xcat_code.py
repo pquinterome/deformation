@@ -52,7 +52,7 @@ mri_1= np.load('inputs/images_1.npy', allow_pickle=True)
 mri_1 = mri_1[:50]
 mri_2 = np.load('inputs/images_2.npy',allow_pickle=True)
 mri_2 = mri_2[-50:]
-mri = np.concatenate((mri_1, mri_2)).astype('int32')
+mri = np.concatenate((mri_1, mri_2))    #.astype('int32')
 #mri = np.array([mri[i][:,125,:] for i in range(len(mri))])
 print('MRI_size', mri.shape)
 
