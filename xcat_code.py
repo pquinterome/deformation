@@ -190,7 +190,9 @@ train_dataset = train_dataset.shuffle(buffer_size=50).batch(batch_size)
 val_dataset = tf.data.Dataset.from_tensor_slices((X_test, y_test))
 val_dataset = val_dataset.batch(batch_size)
 ##
-#
+AUTOTUNE = tf.data.AUTOTUNE
+train_dataset = train_dataset.cache().prefetch(buffer_size=AUTOTUNE)
+val_dataset = val_dataset.cache().prefetch(buffer_size=AUTOTUNE)
 #strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1"])
 #with strategy.scope():
     # Model for MRI
