@@ -211,9 +211,9 @@ model1 = Model(i, x)
 model1.summary()
 ##   #adam = tf.keras.optimizers.Adam(learning_rate=0.01, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
 model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
-#early_stop = EarlyStopping(monitor='val_loss', patience=3)
-##
-##gc.collect()
+early_stop = EarlyStopping(monitor='val_loss', patience=3)
+#
+#gc.collect()
 history = model1.fit(train_dataset, validation_data= val_dataset, epochs=100, callbacks=[early_stop], verbose=1)
 model1.save('outputs/model_1_reg.h5')
 
