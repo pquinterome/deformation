@@ -292,7 +292,7 @@ plt.savefig('outputs/Learning_curve.png', bbox_inches='tight')
 #plt.legend()
 #plt.savefig('regression_plot.png', bbox_inches='tight')
 
-model1 = tf.keras.models.load_model('models/model_1_reg.h5')
+model1 = tf.keras.models.load_model('outputs/model_1_reg.h5')
 print('all ok (:')
 
 predictions=[]
