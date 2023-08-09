@@ -48,9 +48,9 @@ y = np.concatenate((y1,y2))
 y = np.array([-y[i]/y.min() if y[i]<0 else y[i]/y.max() for i in range(len(y))])
 print('Output Size', y.shape)
 
-mri_1= np.load('inputs/images_1.npy', allow_pickle=True)
+mri_1= np.load('inputs/im_ct_1.npy', allow_pickle=True)
 mri_1 = mri_1[:500]
-mri_2 = np.load('inputs/images_2.npy',allow_pickle=True)
+mri_2 = np.load('inputs/im_ct_2.npy',allow_pickle=True)
 mri_2 = mri_2[-500:]
 mri = np.concatenate((mri_1, mri_2))    #.astype('int32')
 #mri = np.array([mri[i][:,125,:] for i in range(len(mri))])
@@ -212,10 +212,9 @@ model1.summary()
 ##   #adam = tf.keras.optimizers.Adam(learning_rate=0.01, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
 model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
 early_stop = EarlyStopping(monitor='val_loss', patience=3)
-#
-#gc.collect()
 history = model1.fit(train_dataset, validation_data= val_dataset, epochs=100, callbacks=[early_stop], verbose=1)
 model1.save('outputs/model_1_reg.h5')
+model1.save('models/model_1_reg.h5')
 
 #model1 = tf.keras.models.load_model('outputs/model_1_reg.h5')
 pred = model1.predict(X_test)
