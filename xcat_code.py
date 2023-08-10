@@ -300,7 +300,7 @@ root_mean_sq=[]
 yey=[]
 r=[]
 models= [model1, model1, model1, model1, model1]
-fig3, ax3 = plt.subplots()
+fig3 = plt.subplots()
 for model in models:
     xw = mri
     X_train, X_test, y_train, y_test = train_test_split(xw, y, test_size=0.2) #random_state=1
@@ -318,14 +318,15 @@ for model in models:
     predictions.append(pred.ravel())
     mean_abs_err.append(b)
     root_mean_sq.append(a)
+    yey.append(y_test)
     r.append(s)
 wey = np.array(yey)
 me = np.array(mean_abs_err)
 rs = np.array(root_mean_sq)
 predy = np.array(predictions)
 r2 = np.array(r)
-k1 = predy.mean(axis=0)
-k2 = predy.std(axis=0)
+#k1 = predy.mean(axis=0)
+#k2 = predy.std(axis=0)
 #new_dfw = pd.DataFrame({'Predicted Values':k1, 'True Values':y_test, 'Standard Deviation':k2})
 plt.plot([1, -1], [1, -1], linestyle='--', lw=1, color='k', alpha=.15)
 plt.plot([-0.95, 1], [-1, 0.95], 'r--', linewidth=0.8, alpha=.15)
