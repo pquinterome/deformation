@@ -38,7 +38,7 @@ print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 
 # Hi
-#
+# How are you
 #########Inputs and Outputs##########
 y= np.load('inputs/sample.npy',allow_pickle=True)
 y = y[:,0]
