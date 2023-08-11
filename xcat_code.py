@@ -37,7 +37,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 
-
+# Hi
 #
 #########Inputs and Outputs##########
 y= np.load('inputs/sample.npy',allow_pickle=True)
