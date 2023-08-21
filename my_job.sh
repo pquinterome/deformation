@@ -1,7 +1,7 @@
 #!/bin/bash
 #BSUB -m "pllimphsing5"
 #BSUB -n 12                     # 24 cores
-#BSUB -gpu "num=2:mode=exclusive_process:mps=no:j_exclusive=yes"
+#BSUB -gpu "num=1:mode=exclusive_process:mps=no:j_exclusive=yes"
 #BSUB -W 80:00                   # 80-hour run-time
 #BSUB -R "rusage[mem=120GB]"     # 4000 MB per core
 #BSUS -q research
