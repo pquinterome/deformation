@@ -42,16 +42,16 @@ print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 #########Inputs and Outputs##########
 y= np.load('inputs/sample.npy',allow_pickle=True)
 y = y[:,0]
-y1 = y[:400]
-y2 = y[-400:]
+y1 = y[:300]
+y2 = y[-300:]
 y = np.concatenate((y1,y2))
 y = np.array([-y[i]/y.min() if y[i]<0 else y[i]/y.max() for i in range(len(y))])
 print('Output Size', y.shape)
 
 mri_1= np.load('inputs/im_ct_1.npy', allow_pickle=True)
-mri_1 = mri_1[:400]
+mri_1 = mri_1[:300]
 mri_2 = np.load('inputs/im_ct_2.npy',allow_pickle=True)
-mri_2 = mri_2[-400:]
+mri_2 = mri_2[-300:]
 mri = np.concatenate((mri_1, mri_2))    #.astype('int32')
 #mri = np.array([mri[i][:,125,:] for i in range(len(mri))])
 print('MRI_size', mri.shape)
@@ -175,8 +175,8 @@ xw = mri
 X_train, X_test, y_train, y_test = train_test_split(xw, y, test_size=0.2) #random_state=1
 print(X_train.shape)
 print(X_test.shape)
-X_train = X_train.reshape(640, 80, 256, 256, 1)
-X_test = X_test.reshape(160, 80, 256, 256, 1)
+X_train = X_train.reshape(480, 80, 256, 256, 1)
+X_test = X_test.reshape(120, 80, 256, 256, 1)
 print(X_train.shape)
 print(X_test.shape)
 ##
