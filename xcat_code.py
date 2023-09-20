@@ -221,6 +221,9 @@ pred = model1.predict(X_test)
 #gc.collect()
 #history = model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=5)
 
+np.save('outputs/y_test2.npy', y_test)
+np.save('outputs/predy2.npy', pred)
+
 fig2 = plt.figure(2)
 plt.figure(figsize=(20,18))
 plt.subplot(3,4,1)
