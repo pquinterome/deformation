@@ -48,9 +48,9 @@ y = np.concatenate((y1,y2))
 y = np.array([-y[i]/y.min() if y[i]<0 else y[i]/y.max() for i in range(len(y))])
 print('Output Size', y.shape)
 
-mri_1= np.load('inputs/im_ct2_1.npy', allow_pickle=True)
+mri_1= np.load('inputs/im_ct_1.npy', allow_pickle=True)
 mri_1 = mri_1[:400]
-mri_2 = np.load('inputs/im_ct2_2.npy',allow_pickle=True)
+mri_2 = np.load('inputs/im_ct_2.npy',allow_pickle=True)
 mri_2 = mri_2[-400:]
 mri = np.concatenate((mri_1, mri_2))    #.astype('int32')
 #mri = np.array([mri[i][:,125,:] for i in range(len(mri))])
@@ -125,52 +125,9 @@ plt.axhline(y=50, color='r', linestyle='-', lw=1)
 plt.axhline(y=40, color='r', linestyle=':', lw=1)
 plt.ylim(0,80)
 plt.title(i)
-plt.savefig('outputs/Sanity_check2.png', bbox_inches='tight')
-#
+plt.savefig('outputs/Sanity_check.png', bbox_inches='tight')
 #
 
-#
-## Model for LIVER
-#i = Input(shape=(80, 256, 256, 1))
-#x = Conv3D(filters=164, kernel_size=(8,8,8), activation='relu', padding='same')(i)
-#x = MaxPool3D(pool_size=(8,8,8))(x)
-#x = Conv3D(filters=34, kernel_size=(8,8,8), activation='relu', padding='same')(x)
-#x = MaxPool3D(pool_size=(8,8,8))(x)
-#x = Flatten()(x)
-#x = Dense(832, activation='relu')(x)
-#x = Dense(410, activation='relu')(x)
-#x = Dense(200, activation='relu')(x)
-#x = Dense(105, activation='relu')(x)
-#x = Dense(10, activation='relu')(x)
-#x = Dense(1, activation='linear')(x)
-#model2 = Model(i, x)
-##model.summary()
-##adam = tf.keras.optimizers.Adam(learning_rate=0.01, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
-#model2.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
-#early_stop = EarlyStopping(monitor='val_loss', patience=3)
-##
-## Model for PTV
-#i = Input(shape=(80, 256, 256, 1))
-#x = Conv3D(filters=164, kernel_size=(8,8,8), activation='relu', padding='same')(i)
-#x = MaxPool3D(pool_size=(8,8,8))(x)
-#x = Flatten()(x)
-#x = Dense(232, activation='relu')(x)
-#x = Dense(110, activation='relu')(x)
-#x = Dense(45, activation='relu')(x)
-#x = Dense(10, activation='relu')(x)
-#x = Dense(1, activation='linear')(x)
-#model3 = Model(i, x)
-##model.summary()
-##adam = tf.keras.optimizers.Adam(learning_rate=0.01, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
-#model3.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
-#early_stop = EarlyStopping(monitor='val_loss', patience=3)
-#
-#
-#
-#
-#
-#
-##models= [model1, model1, model1, model1, model1]
 xw = mri
 X_train, X_test, y_train, y_test = train_test_split(xw, y, test_size=0.2) #random_state=1
 print(X_train.shape)
@@ -179,119 +136,10 @@ X_train = X_train.reshape(640, 80, 256, 256, 1)
 X_test = X_test.reshape(160, 80, 256, 256, 1)
 print(X_train.shape)
 print(X_test.shape)
-##
-##
-##
-batch_size=5
-# Prepare the training dataset.
-train_dataset = tf.data.Dataset.from_tensor_slices((X_train, y_train))
-train_dataset = train_dataset.shuffle(buffer_size=50).batch(batch_size)
-# Prepare the validation dataset.
-val_dataset = tf.data.Dataset.from_tensor_slices((X_test, y_test))
-val_dataset = val_dataset.batch(batch_size)
-###
-AUTOTUNE = tf.data.AUTOTUNE
-train_dataset = train_dataset.cache().prefetch(buffer_size=AUTOTUNE)
-val_dataset = val_dataset.cache().prefetch(buffer_size=AUTOTUNE)
-#strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1"])
-#with strategy.scope():
-    # Model for MRI
-i = Input(shape=(80, 256, 256, 1))
-x = Conv3D(filters=64, kernel_size=(8,8,8), activation='relu', padding='same')(i)
-x = MaxPool3D(pool_size=(8,8,8))(x)
-x = Conv3D(filters=32, kernel_size=(4,4,4), activation='relu', padding='same')(x)
-x = MaxPool3D(pool_size=(4,4,4))(x)
-x = Flatten()(x)
-x = Dense(782, activation='relu')(x)
-x = Dense(190, activation='relu')(x)
-x = Dense(85, activation='relu')(x)
-x = Dense(20, activation='relu')(x)
-x = Dense(1, activation='linear')(x)
-model1 = Model(i, x)
-model1.summary()
-##   #adam = tf.keras.optimizers.Adam(learning_rate=0.01, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
-model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
-early_stop = EarlyStopping(monitor='val_loss', patience=3)
-history = model1.fit_generator(train_dataset, validation_data= val_dataset, epochs=100, callbacks=[early_stop], verbose=2)
-model1.save('outputs/model2_2_reg.h5')
-model1.save('models/model2_2_reg.h5')
-#
-#model1 = tf.keras.models.load_model('outputs/model_1_reg.h5')
-pred = model1.predict(X_test)
-#gc.collect()
-#history = model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=5)
 
-fig2 = plt.figure(2)
-plt.figure(figsize=(20,18))
-plt.subplot(3,4,1)
-plt.title('Loss / Mean Squared Error')
-plt.plot(history.history['loss'], label='train')
-plt.plot(history.history['val_loss'], label='test')
-plt.legend()
-plt.subplot(3,4,2)
-plt.title('Mean Absolute Error')
-plt.plot(history.history['mean_absolute_error'], label='mae')
-plt.plot(history.history['val_mean_absolute_error'], label='val_mae')
-plt.legend()
-plt.subplot(3,4,3)
-plt.scatter(x=y_test, y=pred, edgecolors='k', color='r', alpha=0.7, label='Q1')
-#plt.scatter(x=y_test[:,1], y=pred[:,1], edgecolors='k', color='g', alpha=0.7, label='Q2')
-#plt.scatter(x=y_test[:,2], y=pred[:,2], edgecolors='k', color='cyan', alpha=0.7, label='Q3')
-plt.plot([1, -1], [1, -1], linestyle='--', lw=1, color='k', alpha=.15)
-plt.plot([-0.95, 1], [-1, 0.95], 'r--', linewidth=0.8, alpha=.15)
-plt.plot([-1, 0.95], [-0.95, 1], 'r--', linewidth=0.8, alpha=.15, label='$\pm$ 5%')
-plt.plot([-0.90, 1], [-1, 0.90], 'r--', linewidth=0.8, alpha=.3)
-plt.plot([-1, 0.90], [-0.90, 1], 'r--', linewidth=0.8, alpha=.3, label='$\pm$ 10%')
-plt.xlabel('True Values')
-plt.ylabel('Predicted Values')
-plt.legend();
-plt.savefig('outputs/Learning_curve2.png', bbox_inches='tight')
 
-#model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=2, batch_size=5)
-#model1.save('outputs/model_1_reg.h5')
-#model1.save('models/model_1_reg.h5')
 
-#history = model.fit(train_dataset, validation_data= val_dataset, epochs=100, callbacks=[early_stop], verbose=1, batch_size=5)
-#history= model.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=1, batch_size=5)
-#pred = (model.predict(X_test)).ravel()
-#
-#
-#
-#fig = plt.figure(1)
-#plt.figure(figsize=(20,18))
-#plt.subplot(3,4,1)
-#plt.title('Loss / Mean Squared Error')
-#plt.plot(history.history['loss'], label='train')
-#plt.plot(history.history['val_loss'], label='test')
-#plt.legend()
-#plt.subplot(3,4,2)
-#plt.title('Loss')
-#plt.plot(history.history['loss'], label='train')
-#plt.legend()
-#plt.subplot(3,4,3)
-#plt.title('Loss / Mean Squared Error')
-#plt.plot(history.history['val_loss'], label='test')
-#plt.legend()
-#plt.subplot(3,4,4)
-#plt.title('Mean Absolute Error')
-#plt.plot(history.history['mean_absolute_error'], label='mae')
-#plt.plot(history.history['val_mean_absolute_error'], label='val_mae')
-#plt.legend()
-#plt.savefig('learning_curve.png', bbox_inches='tight')
-
-#fig2 = plt.figure(4)
-#plt.scatter(x=y_test, y=pred, edgecolors='k', color='r', alpha=0.7, label='Q1')
-#plt.plot([1, -1], [1, -1], linestyle='--', lw=1, color='k', alpha=.15)
-#plt.plot([-0.95, 1], [-1, 0.95], 'r--', linewidth=0.8, alpha=.15)
-#plt.plot([-1, 0.95], [-0.95, 1], 'r--', linewidth=0.8, alpha=.15, label='$\pm$ 5%')
-#plt.plot([-0.90, 1], [-1, 0.90], 'r--', linewidth=0.8, alpha=.3)
-#plt.plot([-1, 0.90], [-0.90, 1], 'r--', linewidth=0.8, alpha=.3, label='$\pm$ 10%')
-#plt.xlabel('True Values')
-#plt.ylabel('Predicted Values')
-#plt.legend()
-#plt.savefig('regression_plot.png', bbox_inches='tight')
-
-model1 = tf.keras.models.load_model('outputs/model2_2_reg.h5', compile=False)
+model1 = tf.keras.models.load_model('outputs/model_2_reg.h5', compile=False)
 print('all ok (:')
 
 predictions=[]
@@ -300,6 +148,7 @@ root_mean_sq=[]
 yey=[]
 r=[]
 models= [model1, model1, model1, model1, model1]
+early_stop = EarlyStopping(monitor='val_loss', patience=5)
 fig3 = plt.subplots()
 for model in models:
     xw = mri
@@ -307,8 +156,7 @@ for model in models:
     print(X_train.shape)
     print(X_test.shape)
     X_train = X_train.reshape(640, 80, 256, 256, 1)
-    X_test = X_test.reshape(160, 80, 256, 256, 1)   
-    #model1.fit(x=X_train, y= y_train, validation_data= (X_test, y_test), epochs=100, callbacks=[early_stop], verbose=2, batch_size=5)
+    X_test = X_test.reshape(160, 80, 256, 256, 1)     
     pred = model1.predict(X_test)
     s = r2_score(y_test, pred)
     b = mae(y_test, pred)
@@ -342,7 +190,7 @@ plt.plot(predy[4], wey[4], 'ko', alpha=0.35)
 #sns.regplot(data=new_dfw, y='Predicted Values', x='True Values', scatter_kws=dict(color='k', s=20, alpha=1, marker='*'), line_kws=dict(color='orange', alpha=0.9))
 #ax3.errorbar(data=new_dfw, y='Predicted Values', x='True Values', yerr=new_dfw['Standard Deviation'], fmt='none', capsize=0,  color='gray')
 plt.xlim(-1.1,1.1)
-plt.savefig('outputs/MRI_model_performance_3d_2.png', bbox_inches='tight')
+plt.savefig('outputs/MRI_model_performance_3d.png', bbox_inches='tight')
 print('MRI_MODEL')
 
 np.save('outputs/y_test.npy', wey)
