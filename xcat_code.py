@@ -348,10 +348,10 @@ plt.xlim(-1.1,1.1)
 plt.savefig('outputs/MRI_model_performance_3d_2.png', bbox_inches='tight')
 print('MRI_MODEL')
 
-np.save('outputs/y_test.npy', wey)
-np.save('outputs/predy.npy', predy)
-np.save('outputs/mae.npy', me)
-np.save('outputs/rmse.npy', rs)
+np.save('outputs/y_test2.npy', wey)
+np.save('outputs/predy2.npy', predy)
+np.save('outputs/mae2.npy', me)
+np.save('outputs/rmse2.npy', rs)
 print('***MRI_Model: DONE***')
 #
 #
