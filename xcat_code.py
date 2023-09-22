@@ -175,7 +175,7 @@ xw = mri
 X_train, X_test, y_train, y_test = train_test_split(xw, y, test_size=0.2) #random_state=1
 print(X_train.shape)
 print(X_test.shape)
-X_train = X_train.reshape(330, 80, 256, 256, 1)
+X_train = X_train.reshape(320, 80, 256, 256, 1)
 X_test = X_test.reshape(80, 80, 256, 256, 1)
 print(X_train.shape)
 print(X_test.shape)
