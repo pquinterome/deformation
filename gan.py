@@ -36,10 +36,10 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 #tf.config.list_physical_devices('GPU')
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 ######################################
-import tensorflow as tf
-gpus = tf.config.experimental.list_physical_devices('GPU')
-for gpu in gpus: 
-    tf.config.experimental.set_memory_growth(gpu, True)
+#import tensorflow as tf
+#gpus = tf.config.experimental.list_physical_devices('GPU')
+#for gpu in gpus: 
+#    tf.config.experimental.set_memory_growth(gpu, True)
 
 # Bringing in matplotlib for viz stuff
 from matplotlib import pyplot as plt
