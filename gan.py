@@ -49,8 +49,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, Dense, Flatten, Reshape, LeakyReLU, Dropout, UpSampling2D
 
 #########Inputs and Outputs##########
-ct = np.load('model_dataset/ct2.npy', allow_pickle=True)
-cbct = np.load('model_dataset/cbct2.npy', allow_pickle=True)
+ct = np.load('inputs/ct2.npy', allow_pickle=True)
+cbct = np.load('inputs/cbct2.npy', allow_pickle=True)
 ct = ct.reshape(3920, 512, 512,1)
 cbct = cbct.reshape(3920, 512, 512,1)
 X = ct
