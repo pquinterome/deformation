@@ -167,20 +167,20 @@ def build_discriminator():
     model.add(LeakyReLU(0.2))
     model.add(Dropout(0.4))
     
-    # Fourth Conv Block
-    model.add(Conv2D(256, 50))
-    model.add(LeakyReLU(0.2))
-    model.add(Dropout(0.4))
+    ## Fourth Conv Block
+    #model.add(Conv2D(256, 50))
+    #model.add(LeakyReLU(0.2))
+    #model.add(Dropout(0.4))
 
-    # Third Conv Block
-    model.add(Conv2D(512, 50))
-    model.add(LeakyReLU(0.2))
-    model.add(Dropout(0.4))
+    ## Third Conv Block
+    #model.add(Conv2D(512, 50))
+    #model.add(LeakyReLU(0.2))
+    #model.add(Dropout(0.4))
     
-    # Fourth Conv Block
-    model.add(Conv2D(512, 50))
-    model.add(LeakyReLU(0.2))
-    model.add(Dropout(0.4))
+    ## Fourth Conv Block
+    #model.add(Conv2D(512, 50))
+    #model.add(LeakyReLU(0.2))
+    #model.add(Dropout(0.4))
 
     
     # Flatten then pass to dense layer
