@@ -293,6 +293,7 @@ class ModelMonitor(Callback):
 #
 #
 # Recommend 2000 epochs
+print('ready to train')
 hist = fashgan.fit(ds, epochs=200, callbacks=[ModelMonitor()])
 fig = plt.figure(2)
 plt.suptitle('Loss')
