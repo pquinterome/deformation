@@ -257,7 +257,7 @@ class FashionGAN(Model):
         # Train the generator 
         with tf.GradientTape() as g_tape: 
             # Generate some new images
-            gen_images = self.generator(tf.random.normal((100,100,1)), training=True)
+            gen_images = self.generator(tf.random.normal((100,10,1)), training=True)
                                         
             # Create the predicted labels
             predicted_labels = self.discriminator(gen_images, training=False)
