@@ -57,7 +57,7 @@ X = ct
 y = cbct
 ds = tf.data.Dataset.from_tensor_slices(X)
 ds = ds.cache()
-ds = ds.batch(100)
+ds = ds.batch(10)
 ds = ds.prefetch(64)
 print('ds.as_numpy_iterator()', ds.as_numpy_iterator().next().shape)
 print('ds.as_numpy_iterator().next()[0]', ds.as_numpy_iterator().next()[0].shape)
@@ -135,7 +135,7 @@ generator = build_generator()
 generator.summary()
 #
 # Generate new fashion
-img = generator.predict(np.random.randn(4,100,1))
+img = generator.predict(np.random.randn(4,10,1))
 # Setup the subplot formatting 
 fig = plt.figure(2)
 fig, ax = plt.subplots(ncols=4, figsize=(10,15))
@@ -191,7 +191,7 @@ def build_discriminator():
     return model 
 discriminator = build_discriminator()
 discriminator.summary()
-img = generator.predict(np.random.randn(4,100,1))
+img = generator.predict(np.random.randn(4,10,1))
 discriminator.predict(img)
 #
 # Adam is going to be the optimizer for both
@@ -230,7 +230,7 @@ class FashionGAN(Model):
     def train_step(self, batch):
         # Get the data 
         real_images = batch
-        fake_images = self.generator(tf.random.normal((100, 100, 1)), training=False)
+        fake_images = self.generator(tf.random.normal((100, 10, 1)), training=False)
         
         # Train the discriminator
         with tf.GradientTape() as d_tape: 
