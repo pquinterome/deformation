@@ -294,7 +294,9 @@ class ModelMonitor(Callback):
 #
 # Recommend 2000 epochs
 print('ready to train')
-hist = fashgan.fit(ds, epochs=200, callbacks=[ModelMonitor()])
+strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1"])
+with strategy.scope():
+    hist = fashgan.fit(ds, epochs=200, callbacks=[ModelMonitor()])
 fig = plt.figure(2)
 plt.suptitle('Loss')
 plt.plot(hist.history['d_loss'], label='d_loss')
