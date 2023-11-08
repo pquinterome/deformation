@@ -50,7 +50,7 @@ from tensorflow.keras.layers import Conv2D, Dense, Flatten, Reshape, LeakyReLU, 
 
 #########Inputs and Outputs##########
 #ct = np.load('inputs/ct2.npy', allow_pickle=True)
-cbct = np.load('inputs/cbct2.npy', allow_pickle=True)
+cbct = np.load('inputs/cbct.npy', allow_pickle=True)
 #ct = ct.reshape(3920, 512, 512,1)
 cbct = cbct.reshape(3920,128,128,1)
 X = cbct[:200,:,:,:]
