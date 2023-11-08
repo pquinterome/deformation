@@ -85,7 +85,7 @@ def build_generator():
     
     # Takes in random values and reshapes it to 7x7x128
     # Beginnings of a generated image
-    model.add(Dense(8*8*100, input_dim=100))
+    model.add(Dense(8*8*100, input_dim=10))
     model.add(LeakyReLU(0.2))
     model.add(Reshape((8,8,100)))
     
