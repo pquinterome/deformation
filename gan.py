@@ -53,7 +53,7 @@ ct = np.load('inputs/ct2.npy', allow_pickle=True)
 cbct = np.load('inputs/cbct2.npy', allow_pickle=True)
 ct = ct.reshape(3920, 512, 512,1)
 cbct = cbct.reshape(3920, 512, 512,1)
-X = ct
+X = ct[:100,:,:,:]
 y = cbct
 ds = tf.data.Dataset.from_tensor_slices(X)
 ds = ds.cache()
