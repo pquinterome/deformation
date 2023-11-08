@@ -49,12 +49,12 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, Dense, Flatten, Reshape, LeakyReLU, Dropout, UpSampling2D
 
 #########Inputs and Outputs##########
-ct = np.load('inputs/ct2.npy', allow_pickle=True)
+#ct = np.load('inputs/ct2.npy', allow_pickle=True)
 cbct = np.load('inputs/cbct2.npy', allow_pickle=True)
-ct = ct.reshape(3920, 512, 512,1)
-cbct = cbct.reshape(3920, 512, 512,1)
-X = ct[:100,:,:,:]
-y = cbct
+#ct = ct.reshape(3920, 512, 512,1)
+cbct = cbct.reshape(3920,128,128,1)
+X = cbct[:200,:,:,:]
+#y = cbct
 ds = tf.data.Dataset.from_tensor_slices(X)
 ds = ds.cache()
 ds = ds.batch(10)
@@ -109,15 +109,15 @@ def build_generator():
     model.add(Conv2D(100, 5, padding='same'))
     model.add(LeakyReLU(0.2))
 
-    # Upsampling block 5 
-    model.add(UpSampling2D())
-    model.add(Conv2D(100, 5, padding='same'))
-    model.add(LeakyReLU(0.2))
+    ## Upsampling block 5 
+    #model.add(UpSampling2D())
+    #odel.add(Conv2D(100, 5, padding='same'))
+    #model.add(LeakyReLU(0.2))
 
-    # Upsampling block 6 
-    model.add(UpSampling2D())
-    model.add(Conv2D(100, 5, padding='same'))
-    model.add(LeakyReLU(0.2))
+    ## Upsampling block 6 
+    #model.add(UpSampling2D())
+    #model.add(Conv2D(100, 5, padding='same'))
+    #model.add(LeakyReLU(0.2))
     
     # Convolutional block 1
     model.add(Conv2D(100, 4, padding='same'))
@@ -153,29 +153,29 @@ def build_discriminator():
     model = Sequential()
     
     # First Conv Block
-    model.add(Conv2D(32, 50, input_shape = (512,512,1)))
+    model.add(Conv2D(32, 5, input_shape = (128,128,1)))
     model.add(LeakyReLU(0.2))
     model.add(Dropout(0.4))
     
     # Second Conv Block
-    model.add(Conv2D(64, 50))
+    model.add(Conv2D(64, 5))
     model.add(LeakyReLU(0.2))
     model.add(Dropout(0.4))
     
     # Third Conv Block
-    model.add(Conv2D(128, 50))
+    model.add(Conv2D(128, 5))
     model.add(LeakyReLU(0.2))
     model.add(Dropout(0.4))
     
-    ## Fourth Conv Block
-    #model.add(Conv2D(256, 50))
-    #model.add(LeakyReLU(0.2))
-    #model.add(Dropout(0.4))
+    # Fourth Conv Block
+    model.add(Conv2D(256, 5))
+    model.add(LeakyReLU(0.2))
+    model.add(Dropout(0.4))
 
-    ## Third Conv Block
-    #model.add(Conv2D(512, 50))
-    #model.add(LeakyReLU(0.2))
-    #model.add(Dropout(0.4))
+    # Fifth Conv Block
+    model.add(Conv2D(512, 5))
+    model.add(LeakyReLU(0.2))
+    model.add(Dropout(0.4))
     
     ## Fourth Conv Block
     #model.add(Conv2D(512, 50))
