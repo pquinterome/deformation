@@ -53,11 +53,11 @@ from tensorflow.keras.layers import Conv2D, Dense, Flatten, Reshape, LeakyReLU, 
 cbct = np.load('inputs/cbct.npy', allow_pickle=True)
 #ct = ct.reshape(3920, 512, 512,1)
 cbct = cbct.reshape(3920,128,128,1)
-X = cbct[:200,:,:,:]
+X = cbct        #[:200,:,:,:]
 #y = cbct
 ds = tf.data.Dataset.from_tensor_slices(X)
 ds = ds.cache()
-ds = ds.batch(10)
+ds = ds.batch(100)
 ds = ds.prefetch(64)
 print('ds.as_numpy_iterator()', ds.as_numpy_iterator().next().shape)
 print('ds.as_numpy_iterator().next()[0]', ds.as_numpy_iterator().next()[0].shape)
@@ -85,7 +85,7 @@ def build_generator():
     
     # Takes in random values and reshapes it to 7x7x128
     # Beginnings of a generated image
-    model.add(Dense(8*8*100, input_dim=10))
+    model.add(Dense(8*8*100, input_dim=100))
     model.add(LeakyReLU(0.2))
     model.add(Reshape((8,8,100)))
     
@@ -135,7 +135,7 @@ generator = build_generator()
 generator.summary()
 #
 # Generate new fashion
-img = generator.predict(np.random.randn(4,10,1))
+img = generator.predict(np.random.randn(4,100,1))
 # Setup the subplot formatting 
 fig = plt.figure(2)
 fig, ax = plt.subplots(ncols=4, figsize=(10,15))
@@ -191,7 +191,7 @@ def build_discriminator():
     return model 
 discriminator = build_discriminator()
 discriminator.summary()
-img = generator.predict(np.random.randn(4,10,1))
+img = generator.predict(np.random.randn(4,100,1))
 discriminator.predict(img)
 #
 # Adam is going to be the optimizer for both
@@ -231,7 +231,7 @@ class FashionGAN(Model):
     def train_step(self, batch):
         # Get the data 
         real_images = batch
-        fake_images = self.generator(tf.random.normal((100, 10, 1)), training=False)
+        fake_images = self.generator(tf.random.normal((100, 100, 1)), training=False)
         
         # Train the discriminator
         with tf.GradientTape() as d_tape: 
@@ -258,7 +258,7 @@ class FashionGAN(Model):
         # Train the generator 
         with tf.GradientTape() as g_tape: 
             # Generate some new images
-            gen_images = self.generator(tf.random.normal((100,10,1)), training=True)
+            gen_images = self.generator(tf.random.normal((100,100,1)), training=True)
                                         
             # Create the predicted labels
             predicted_labels = self.discriminator(gen_images, training=False)
@@ -297,7 +297,7 @@ class ModelMonitor(Callback):
 print('ready to train')
 strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1"])
 
-hist = fashgan.fit(ds, epochs=200, callbacks=[ModelMonitor()])
+hist = fashgan.fit(ds, epochs=100, callbacks=[ModelMonitor()])
 fig = plt.figure(2)
 plt.suptitle('Loss')
 plt.plot(hist.history['d_loss'], label='d_loss')
