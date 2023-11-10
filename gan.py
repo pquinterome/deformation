@@ -299,7 +299,7 @@ print('ready to train')
 
 hist = fashgan.fit(ds, epochs=100, callbacks=[ModelMonitor()])
 
-fig = plt.figure(2)
+fig2 = plt.figure(2)
 plt.suptitle('Loss')
 plt.plot(hist.history['d_loss'], label='d_loss')
 plt.plot(hist.history['g_loss'], label='g_loss')
