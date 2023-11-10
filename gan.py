@@ -53,7 +53,7 @@ from tensorflow.keras.layers import Conv2D, Dense, Flatten, Reshape, LeakyReLU, 
 cbct = np.load('inputs/cbct.npy', allow_pickle=True)
 #ct = ct.reshape(3920, 512, 512,1)
 cbct = cbct.reshape(3920,128,128,1)
-X = cbct[:200,:,:,:]
+X = cbct  #[:200,:,:,:]
 #y = cbct
 ds = tf.data.Dataset.from_tensor_slices(X)
 ds = ds.cache()
