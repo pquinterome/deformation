@@ -53,7 +53,7 @@ from tensorflow.keras.layers import Conv2D, Dense, Flatten, Reshape, LeakyReLU, 
 cbct = np.load('inputs/cbct.npy', allow_pickle=True)
 #ct = ct.reshape(3920, 512, 512,1)
 cbct = cbct.reshape(3920,128,128,1)
-X = cbct        #[:200,:,:,:]
+X = cbct[:200,:,:,:]
 #y = cbct
 ds = tf.data.Dataset.from_tensor_slices(X)
 ds = ds.cache()
@@ -279,7 +279,7 @@ import os
 from tensorflow.keras.preprocessing.image import array_to_img
 from tensorflow.keras.callbacks import Callback
 class ModelMonitor(Callback):
-    def __init__(self, num_img=3, latent_dim=10):
+    def __init__(self, num_img=3, latent_dim=100):
         self.num_img = num_img
         self.latent_dim = latent_dim
 
@@ -295,9 +295,10 @@ class ModelMonitor(Callback):
 #
 # Recommend 2000 epochs
 print('ready to train')
-strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1"])
+#strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1"])
 
 hist = fashgan.fit(ds, epochs=100, callbacks=[ModelMonitor()])
+
 fig = plt.figure(2)
 plt.suptitle('Loss')
 plt.plot(hist.history['d_loss'], label='d_loss')
