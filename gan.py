@@ -23,6 +23,7 @@ from skimage.metrics import structural_similarity as ssim
 from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split, KFold, StratifiedKFold
 import tensorflow as tf
+
 from tensorflow import keras
 from tensorflow.keras import layers
 import numpy as np
@@ -53,7 +54,7 @@ from tensorflow.keras.layers import Conv2D, Dense, Flatten, Reshape, LeakyReLU, 
 cbct = np.load('inputs/cbct.npy', allow_pickle=True)
 #ct = ct.reshape(3920, 512, 512,1)
 cbct = cbct.reshape(3920,128,128,1)
-X = cbct  #[:200,:,:,:]
+X = cbct            #[:200,:,:,:]
 #y = cbct
 ds = tf.data.Dataset.from_tensor_slices(X)
 ds = ds.cache()
