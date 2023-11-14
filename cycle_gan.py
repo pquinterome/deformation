@@ -411,8 +411,8 @@ discriminator_y_optimizer.save('outputs/cycle_y_discriminator.h5')
 
 
 # Run the trained model on the test dataset
-for inp in test_horses.take(5):
-  i=0
+i=0
+for inp in test_horses.take(5): 
   generate_images(generator_g, inp)
   plt.savefig(f'outputs/CycleGAN_generator_{i}.png', bbox_inches='tight')
   i=i+1
