@@ -18,5 +18,5 @@
 #echo ">>> Installing Requirements";
 #conda run -n xcat pip install -r /cluster/home/quintep/deformation/requirements.txt
 echo ">>> Running Code";
-python /cluster/home/quintep/deformation/gan.py
+python /cluster/home/quintep/deformation/cycle_gan.py
 echo ">>> End";
