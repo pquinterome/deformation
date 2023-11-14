@@ -292,7 +292,7 @@ if ckpt_manager.latest_checkpoint:
   ckpt.restore(ckpt_manager.latest_checkpoint)
   print ('Latest checkpoint restored!!')
 
-EPOCHS = 100 
+EPOCHS = 10 
 
 def generate_images(model, test_input):
   prediction = model(test_input)
@@ -379,14 +379,28 @@ def train_step(real_x, real_y):
 
 print('TF dataset', tf.data.Dataset.zip((train_horses, train_zebras)))
 
-n = 0
-for image_x, image_y in tf.data.Dataset.zip((train_horses, train_zebras)):
-  train_step(image_x, image_y)
-  if n % 10 == 0:
-    print ('.', end='')
-  n += 1
-clear_output(wait=True)
-generate_images(generator_g, sample_horse)
+for epoch in range(EPOCHS):
+  start = time.time()
+
+  n = 0
+  for image_x, image_y in tf.data.Dataset.zip((train_horses, train_zebras)):
+    train_step(image_x, image_y)
+    if n % 10 == 0:
+      print ('.', end='')
+    n += 1
+
+  clear_output(wait=True)
+  # Using a consistent image (sample_horse) so that the progress of the model
+  # is clearly visible.
+  generate_images(generator_g, sample_horse)
+
+  if (epoch + 1) % 5 == 0:
+    ckpt_save_path = ckpt_manager.save()
+    print ('Saving checkpoint for epoch {} at {}'.format(epoch+1,
+                                                         ckpt_save_path))
+
+  print ('Time taken for epoch {} is {} sec\n'.format(epoch + 1,
+                                                      time.time()-start))
 
 plt.savefig('outputs/CycleGAN_generator.png', bbox_inches='tight')
 
