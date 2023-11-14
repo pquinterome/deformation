@@ -408,3 +408,11 @@ generator_g_optimizer.save('outputs/cycle_g_generator.h5')
 generator_f_optimizer.save('outputs/cycle_f_generator.h5')
 discriminator_x_optimizer.save('outputs/cycle_x_discriminator.h5')
 discriminator_y_optimizer.save('outputs/cycle_y_discriminator.h5')
+
+
+# Run the trained model on the test dataset
+for inp in test_horses.take(5):
+  i=0
+  generate_images(generator_g, inp)
+  plt.savefig(f'outputs/CycleGAN_generator_{i}.png', bbox_inches='tight')
+  i=i+1
