@@ -292,7 +292,7 @@ if ckpt_manager.latest_checkpoint:
   ckpt.restore(ckpt_manager.latest_checkpoint)
   print ('Latest checkpoint restored!!')
 
-EPOCHS = 10 
+EPOCHS = 400 
 
 def generate_images(model, test_input):
   prediction = model(test_input)
