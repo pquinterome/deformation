@@ -404,10 +404,8 @@ for epoch in range(EPOCHS):
 
 plt.savefig('outputs/CycleGAN_generator.png', bbox_inches='tight')
 
-generator_g_optimizer.save('outputs/cycle_g_generator.h5')
-generator_f_optimizer.save('outputs/cycle_f_generator.h5')
-discriminator_x_optimizer.save('outputs/cycle_x_discriminator.h5')
-discriminator_y_optimizer.save('outputs/cycle_y_discriminator.h5')
+generator_g.save('outputs/cycle_generator_g.h5')
+generator_f.save('outputs/cycle_generator_f.h5')
 
 
 # Run the trained model on the test dataset
