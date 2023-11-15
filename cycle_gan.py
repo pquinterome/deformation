@@ -392,6 +392,7 @@ for epoch in range(EPOCHS):
   clear_output(wait=True)
   # Using a consistent image (sample_horse) so that the progress of the model
   # is clearly visible.
+  plt.figure(1) 
   generate_images(generator_g, sample_horse)
 
   if (epoch + 1) % 5 == 0:
@@ -411,6 +412,7 @@ generator_f.save('outputs/cycle_generator_f.h5')
 # Run the trained model on the test dataset
 i=0
 for inp in test_horses.take(5): 
+  plt.figure(i+2) 
   generate_images(generator_g, inp)
   plt.savefig(f'outputs/CycleGAN_generator_{i}.png', bbox_inches='tight')
   i=i+1
