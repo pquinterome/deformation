@@ -50,7 +50,7 @@ y= np.load('./dibh_project/sample2.npy',allow_pickle=True)
 y1 = y[:,:80]
 y3 = np.array([y1[i]-y1[i].min() for i in range(len(y1))])
 y = np.array([y3[i]/y3[i].max() for i in range(len(y3))])
-y_train = y.reshape((88,3, 1))
+y_train = y.reshape((80,3, 1))
 print(y_train.shape)
 y2 = y[:,-20:]
 y3 = np.array([y2[i]-y2[i].min() for i in range(len(y2))])
