@@ -69,10 +69,10 @@ def preprocess_image_train(image):
   return image
 
 y_train = tf.data.Dataset.from_tensor_slices(y_trainy)
-y_train = y_train.map(preprocess_image_train).batch(batch_size)
+y_train = y_train.map(preprocess_image_train)
 
 y_test = tf.data.Dataset.from_tensor_slices(y_testy)
-y_test = y_test.map(preprocess_image_train).batch(batch_size)
+y_test = y_test.map(preprocess_image_train)
 
 
 def read_npy_file(item):
@@ -84,9 +84,9 @@ file_list = train
 file_list2 = test
 
 dataset_train = tf.data.Dataset.from_tensor_slices(file_list)
-dataset_train = dataset_train.map(lambda item:(tf.py_function(read_npy_file, [item], [tf.float64,]))).batch(batch_size)
+dataset_train = dataset_train.map(lambda item:(tf.py_function(read_npy_file, [item], [tf.float64,])))
 dataset_test = tf.data.Dataset.from_tensor_slices(file_list2)
-dataset_test = dataset_test.map(lambda item:(tf.py_function(read_npy_file, [item], [tf.float64,]))).batch(batch_size)
+dataset_test = dataset_test.map(lambda item:(tf.py_function(read_npy_file, [item], [tf.float64,])))
 #dataset = dataset.map(lambda item:tuple(tf.py_function(read_npy_file, [item], [tf.float32,])))
 
 train_dataset = tf.data.Dataset.zip((dataset_train, y_train))
@@ -113,7 +113,7 @@ model1 = Model(i, x)
 model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
 early_stop = EarlyStopping(monitor='val_loss', patience=3)
 
-history= model1.fit(train_dataset, validation_data=test_dataset, epochs=5, callbacks=[early_stop], verbose=2)
+history= model1.fit(train_dataset, validation_data=test_dataset, epochs=5, callbacks=[early_stop], verbose=2, batch_size=3)
 
 
 pred = model1.predict(dataset_test)
