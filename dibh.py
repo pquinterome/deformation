@@ -63,7 +63,7 @@ y_testy = y_test
 
 ######## DATASET GENERATOR ####################
 
-batch_size= 10
+batch_size= 3
 def preprocess_image_train(image):
   image = image
   return image
