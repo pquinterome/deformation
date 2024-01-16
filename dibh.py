@@ -69,10 +69,10 @@ def preprocess_image_train(image):
   return image
 
 y_train = tf.data.Dataset.from_tensor_slices(y_trainy)
-y_train = y_train.map(preprocess_image_train)
+y_train = y_train.map(preprocess_image_train).batch(1)
 
 y_test = tf.data.Dataset.from_tensor_slices(y_testy)
-y_test = y_test.map(preprocess_image_train)
+y_test = y_test.map(preprocess_image_train).batch(1)
 
 
 def read_npy_file(item):
@@ -80,19 +80,17 @@ def read_npy_file(item):
     return data.astype(np.float64)
 
 #file_list = ['/foo/bar.npy', '/foo/baz.npy']
-file_list = train
-file_list2 = test
 
-dataset_train = tf.data.Dataset.from_tensor_slices(file_list)
-dataset_train = dataset_train.map(lambda item:(tf.py_function(read_npy_file, [item], [tf.float64,])))
-dataset_test = tf.data.Dataset.from_tensor_slices(file_list2)
-dataset_test = dataset_test.map(lambda item:(tf.py_function(read_npy_file, [item], [tf.float64,])))
+dataset_train = tf.data.Dataset.from_tensor_slices(train)
+dataset_train = dataset_train.map(lambda item:(tf.py_function(read_npy_file, [item], [tf.float64,]))).batch(1)
+dataset_test = tf.data.Dataset.from_tensor_slices(test)
+dataset_test = dataset_test.map(lambda item:(tf.py_function(read_npy_file, [item], [tf.float64,]))).batch(1)
 #dataset = dataset.map(lambda item:tuple(tf.py_function(read_npy_file, [item], [tf.float32,])))
 
 train_dataset = tf.data.Dataset.zip((dataset_train, y_train))
 test_dataset = tf.data.Dataset.zip((dataset_test, y_test))
 
-train_dataset.element_spec
+print(train_dataset.element_spec)
 
 ########### MODELING ###################
 
@@ -129,7 +127,6 @@ plt.title('Mean Absolute Error')
 plt.plot(history.history['mean_absolute_error'], label='mae')
 plt.plot(history.history['val_mean_absolute_error'], label='val_mae')
 plt.legend()
-
 plt.subplot(3,4,3)
 plt.scatter(x=y_testy, y=pred, edgecolors='k', color='r', alpha=0.7, label='Q1')
 plt.scatter(x=y_testy[:,1], y=pred[:,1], edgecolors='k', color='g', alpha=0.7, label='Q2')
