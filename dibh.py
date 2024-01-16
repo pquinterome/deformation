@@ -129,7 +129,7 @@ with strategy.scope():
 #model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
 early_stop = EarlyStopping(monitor='val_loss', patience=3)
 
-history= model1.fit(train_dataset, validation_data=test_dataset, epochs=5, callbacks=[early_stop], verbose=2, batch_size=3)
+history= model1.fit(train_dataset, validation_data=test_dataset, epochs=5, callbacks=[early_stop], verbose=2)
 
 
 pred = model1.predict(dataset_test)
