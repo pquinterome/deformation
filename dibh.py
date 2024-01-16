@@ -94,7 +94,7 @@ print(train_dataset.element_spec)
 
 ########### MODELING ###################
 
-strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1", , "/gpu:2"])
+strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1", "/gpu:2"])
 with strategy.scope():
   i = Input(shape=(89, 576, 576, 1))
   x = Conv3D(filters=64, kernel_size=(8,8,8), activation='relu', padding='same')(i)
