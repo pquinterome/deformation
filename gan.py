@@ -50,18 +50,18 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, Dense, Flatten, Reshape, LeakyReLU, Dropout, UpSampling2D
 
 #########Inputs and Outputs##########
-#ct = np.load('inputs/ct2.npy', allow_pickle=True)
-cbct = np.load('inputs/cbct.npy', allow_pickle=True)
-#ct = ct.reshape(3920, 512, 512,1)
-cbct = cbct.reshape(3920,128,128,1)
-X = cbct            #[:200,:,:,:]
-#y = cbct
-ds = tf.data.Dataset.from_tensor_slices(X)
-ds = ds.cache()
-ds = ds.batch(100)
-ds = ds.prefetch(64)
-print('ds.as_numpy_iterator()', ds.as_numpy_iterator().next().shape)
-print('ds.as_numpy_iterator().next()[0]', ds.as_numpy_iterator().next()[0].shape)
+ct = np.load('./cbct_project/IRB_CBCT_001/ct.npy')
+ct = ct[-87:-45, :,:]           ###--->>> Use active_match images
+ct = ct - ct.min()              ###--->>> Reset zero and normalize due to metalic artifacts
+ct[ct>1]=1 
+cbct = np.load('./cbct_project/IRB_CBCT_001/cbct_reg.npy')
+cbct = np.array([cbct[i][-87:-45, :,:] for i in range(len(cbct))])
+cbct = np.array([cbct[i] -cbct[i].min() for i in range(len(cbct))])
+cbct[cbct>1]=1
+mask = np.array([np.array(cbct[i]) for i in range(len(cbct))])
+mask[cbct>0]=1
+ct1 = np.array([ct*mask[i] for i in range(len(mask))])
+ct1.shape
 #
 #
 #
