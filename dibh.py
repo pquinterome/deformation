@@ -82,9 +82,9 @@ def read_npy_file(item):
 #file_list = ['/foo/bar.npy', '/foo/baz.npy']
 
 dataset_train = tf.data.Dataset.from_tensor_slices(train)
-dataset_train = dataset_train.cache().map(lambda item:(tf.py_function(read_npy_file, [item], [tf.float64,])), num_parallel_calls=AUTOTUNE).batch(1)
+dataset_train = dataset_train.cache().map(lambda item:(tf.py_function(read_npy_file, [item], [tf.float64,]))).batch(1)
 dataset_test = tf.data.Dataset.from_tensor_slices(test)
-dataset_test = dataset_test.cache().map(lambda item:(tf.py_function(read_npy_file, [item], [tf.float64,])), num_parallel_calls=AUTOTUNE).batch(1)
+dataset_test = dataset_test.cache().map(lambda item:(tf.py_function(read_npy_file, [item], [tf.float64,]))).batch(1)
 #dataset = dataset.map(lambda item:tuple(tf.py_function(read_npy_file, [item], [tf.float32,])))
 
 train_dataset = tf.data.Dataset.zip((dataset_train, y_train))
