@@ -94,21 +94,21 @@ print(train_dataset.element_spec)
 
 ########### MODELING ###################
 
-strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1", "/gpu:2"])
-with strategy.scope():
-  i = Input(shape=(89, 576, 576, 1))
-  x = Conv3D(filters=64, kernel_size=(8,8,8), activation='relu', padding='same')(i)
-  x = MaxPool3D(pool_size=(8,8,8))(x)
-  x = Conv3D(filters=32, kernel_size=(6,6,6), activation='relu', padding='same')(x)
-  x = MaxPool3D(pool_size=(6,6,6))(x)
-  x = Flatten()(x)
-  x = Dense(780, activation='relu')(x)
-  x = Dense(190, activation='relu')(x)
-  #x = Dense(85, activation='relu')(x)
-  #x = Dense(20, activation='relu')(x)
-  x = Dense(3, activation='linear')(x)
-  model1 = Model(i, x)
-  model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
+#strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1", "/gpu:2"])
+#with strategy.scope():
+i = Input(shape=(89, 576, 576, 1))
+x = Conv3D(filters=64, kernel_size=(8,8,8), activation='relu', padding='same')(i)
+x = MaxPool3D(pool_size=(8,8,8))(x)
+x = Conv3D(filters=32, kernel_size=(6,6,6), activation='relu', padding='same')(x)
+x = MaxPool3D(pool_size=(6,6,6))(x)
+x = Flatten()(x)
+x = Dense(780, activation='relu')(x)
+x = Dense(190, activation='relu')(x)
+#x = Dense(85, activation='relu')(x)
+#x = Dense(20, activation='relu')(x)
+x = Dense(3, activation='linear')(x)
+model1 = Model(i, x)
+model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
 
 
 
