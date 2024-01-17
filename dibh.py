@@ -94,23 +94,23 @@ print(train_dataset.element_spec)
 
 ########### MODELING ###################
 
-strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1"])
-with strategy.scope():
-  i = Input(shape=(89, 576, 576, 1))
-  x = Conv3D(filters=64, kernel_size=(16,16,16), activation='relu', padding='same')(i)
-  x = MaxPool3D(pool_size=(16,16,16))(x)
-  x = Conv3D(filters=32, kernel_size=(4,4,4), activation='relu', padding='same')(x)
-  x = MaxPool3D(pool_size=(4,4,4))(x)
-  x = Flatten()(x)
-  x = Dense(780, activation='relu')(x)
-  x = Dense(190, activation='relu')(x)
-  x = Dense(85, activation='relu')(x)
-  x = Dense(20, activation='relu')(x)
-  x = Dense(3, activation='linear')(x)
-  model1 = Model(i, x)
-  model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
-  early_stop = EarlyStopping(monitor='val_loss', patience=3)
-  history= model1.fit(train_dataset, validation_data=test_dataset, epochs=100, callbacks=[], verbose=2)
+#strategy = tf.distribute.MirroredStrategy(devices=["/gpu:0", "/gpu:1"])
+#with strategy.scope():
+i = Input(shape=(89, 576, 576, 1))
+x = Conv3D(filters=64, kernel_size=(16,16,16), activation='relu', padding='same')(i)
+x = MaxPool3D(pool_size=(16,16,16))(x)
+x = Conv3D(filters=32, kernel_size=(4,4,4), activation='relu', padding='same')(x)
+x = MaxPool3D(pool_size=(4,4,4))(x)
+x = Flatten()(x)
+x = Dense(780, activation='relu')(x)
+x = Dense(190, activation='relu')(x)
+x = Dense(85, activation='relu')(x)
+x = Dense(20, activation='relu')(x)
+x = Dense(3, activation='linear')(x)
+model1 = Model(i, x)
+model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
+early_stop = EarlyStopping(monitor='val_loss', patience=3)
+history= model1.fit(train_dataset, validation_data=test_dataset, epochs=100, callbacks=[], verbose=2)
 
 
 
