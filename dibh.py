@@ -109,6 +109,8 @@ with strategy.scope():
   x = Dense(3, activation='linear')(x)
   model1 = Model(i, x)
   model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
+  early_stop = EarlyStopping(monitor='val_loss', patience=3)
+  history= model1.fit(train_dataset, validation_data=test_dataset, epochs=100, callbacks=[], verbose=2)
 
 
 
@@ -127,9 +129,9 @@ with strategy.scope():
 model1.summary()
 
 #model1.compile(loss='mean_squared_error', optimizer= 'adam', metrics=['mean_absolute_error'])
-early_stop = EarlyStopping(monitor='val_loss', patience=3)
+#early_stop = EarlyStopping(monitor='val_loss', patience=3)
 
-history= model1.fit(train_dataset, validation_data=test_dataset, epochs=100, callbacks=[], verbose=2)
+#history= model1.fit(train_dataset, validation_data=test_dataset, epochs=100, callbacks=[], verbose=2)
 
 model1.save('outputs/dibh_model.h5')
 
