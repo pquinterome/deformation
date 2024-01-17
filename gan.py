@@ -362,7 +362,7 @@ fit(train_dataset, test_dataset, steps=40000)
 generator.save('outputs/generator.h5')
 discriminator.save('outputs/discriminator.h5')
 
-!ls  {checkpoint_dir}
+#!ls  {checkpoint_dir}
 
 checkpoint.restore(tf.train.latest_checkpoint(checkpoint_dir))
 i=1
