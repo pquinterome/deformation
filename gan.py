@@ -292,7 +292,7 @@ def generate_images(model, test_input, tar):
     plt.imshow(display_list[i] * 0.5 + 0.5)
     plt.axis('off')
   #plt.savefig('./cbct_project/errors.png', bbox_inches='tight')
-  plt.show()
+  #plt.show()
 
 log_dir="./cbct_project/logs/"
 
