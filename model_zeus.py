@@ -56,6 +56,8 @@ mri_dir = [file for file in path if file.startswith("p")]
 mri_dir = mri_dir[:400]
 #mri_dir
 x = np.array([np.load(directory+'/'+mri_dir[i]) for i in range(len(mri_dir))])
+x = np.array([x[i][55:-50,:,:] for i in range(len(x))])
+print(x.shape)
 
 X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
 X_train = X_train.reshape(320, x.shape[1], x.shape[2], x.shape[3], 1)
