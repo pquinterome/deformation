@@ -44,7 +44,7 @@ print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 
 y= np.load('inputs/zeus/sample.npy',allow_pickle=True)
-y = y[:,0]
+y = y[0,:]
 y = y[:400]
 y = np.array([-y[i]/y.min() if y[i]<0 else y[i]/y.max() for i in range(len(y))])
 print('Output Size', y.shape)
