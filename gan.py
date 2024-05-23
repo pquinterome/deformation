@@ -359,7 +359,7 @@ def fit(train_ds, test_ds, steps):
 
 fit(train_dataset, test_dataset, steps=40000)
 
-generator.save('outputs/generator.h5')
+generator.save('outputs/generator_reloaded.h5')
 discriminator.save('outputs/discriminator.h5')
 
 #!ls  {checkpoint_dir}
