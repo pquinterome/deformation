@@ -50,23 +50,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, Dense, Flatten, Reshape, LeakyReLU, Dropout, UpSampling2D
 
 #########Inputs and Outputs##########
-ct = np.load('./cbct_project/IRB_CBCT_001/ct.npy')
-ct = ct[-87:-45, :,:]           ###--->>> Use active_match images
-ct = ct - ct.min()              ###--->>> Reset zero and normalize due to metalic artifacts
-ct[ct>1]=1 
-cbct = np.load('./cbct_project/IRB_CBCT_001/cbct_reg.npy')
-cbct = np.array([cbct[i][-87:-45, :,:] for i in range(len(cbct))])
-cbct = np.array([cbct[i] -cbct[i].min() for i in range(len(cbct))])
-cbct[cbct>1]=1
-mask = np.array([np.array(cbct[i]) for i in range(len(cbct))])
-mask[cbct>0]=1
-ct1 = np.array([ct*mask[i] for i in range(len(mask))])
-print(ct1.shape)
-#
-#
-#
-ct = ct1.reshape(630, 512, 512,1)
-cbct = cbct.reshape(630, 512, 512,1)
+ct = np.load('./cbct_project/ct.npy')
+cbct = np.load('./cbct_project/cbct_reg.npy')
 X = ct  #[:200,:,:,:]
 y = cbct    #[:200,:,:,:]
 X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.2, random_state=123)
