@@ -344,8 +344,8 @@ def fit(train_ds, test_ds, steps):
 
 fit(train_dataset, test_dataset, steps=40000)
 
-generator.save('outputs/generator_reloaded.h5')
-discriminator.save('outputs/discriminator.h5')
+generator.save('outputs/generator_ct_to_cbct.h5')
+discriminator.save('outputs/discriminator__ct_to_cbct.h5')
 
 #!ls  {checkpoint_dir}
 
