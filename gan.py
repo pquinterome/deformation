@@ -63,8 +63,8 @@ cbct3 = cbct[:, :, ::-1]
 cbct4 = np.rot90(cbct, 2)
 cbct = np.concatenate((cbct, cbct2, cbct3, cbct4))
 
-X = ct  #[:200,:,:,:]
-y = cbct    #[:200,:,:,:]
+y = ct  #[:200,:,:,:]
+X = cbct    #[:200,:,:,:]
 X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.2, random_state=123)
 print(X_train.shape)
 #
