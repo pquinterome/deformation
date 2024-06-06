@@ -52,6 +52,17 @@ from tensorflow.keras.layers import Conv2D, Dense, Flatten, Reshape, LeakyReLU, 
 #########Inputs and Outputs##########
 ct = np.load('./cbct_project/ct2.npy')
 cbct = np.load('./cbct_project/cbct2.npy')
+
+ct2 = ct[:, ::-1, :]
+ct3 = ct[:, :, ::-1]
+ct4 = np.rot90(ct, 2)
+ct = np.concatenate((ct, ct2, ct3, ct4))
+
+cbct2 = cbct[:, ::-1, :]
+cbct3 = cbct[:, :, ::-1]
+cbct4 = np.rot90(cbct, 2)
+cbct = np.concatenate((cbct, cbct2, cbct3, cbct4))
+
 X = ct  #[:200,:,:,:]
 y = cbct    #[:200,:,:,:]
 X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.2, random_state=123)
