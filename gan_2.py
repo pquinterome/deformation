@@ -67,10 +67,20 @@ cbct6 = np.load('./cbct_project/validation/cbct_6.npy')
 
 ct = np.concatenate((ct0, ct1, ct2, ct3, ct4, ct5, ct6))
 cbct = np.concatenate((cbct0, cbct1, cbct2, cbct3, cbct4, cbct5, cbct6))
-print(ct.shape)
 
-ct = ct.reshape((400, 512, 512,1))
-cbct = cbct.reshape((400, 512, 512,1))
+mask = np.array([cbct[i]-cbct[i].min() for i in range(len(cbct))])
+mask[mask>0.1]=1
+print(mask.shape)
+mask2 = np.array([ct[i]-ct[i].min() for i in range(len(ct))])
+mask2[mask2>0.1]=1
+
+ct1 = np.array(ct*mask*mask2)
+cbct1 = np.array(cbct*mask*mask2)
+
+print(ct1.shape)
+
+ct = ct1.reshape((400, 512, 512,1))
+cbct = cbct1.reshape((400, 512, 512,1))
 
 ct2 = ct[:, ::-1, :]
 ct3 = ct[:, :, ::-1]
