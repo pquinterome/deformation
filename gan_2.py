@@ -67,7 +67,7 @@ cbct6 = np.load('./cbct_project/validation/cbct_6.npy')
 
 ct = np.concatenate((ct0, ct1, ct2, ct3, ct4, ct5, ct6))
 cbct = np.concatenate((cbct0, cbct1, cbct2, cbct3, cbct4, cbct5, cbct6))
-ct.shape
+print(ct.shape)
 
 ct = ct.reshape((320, 512, 512,1))
 cbct = cbct.reshape((320, 512, 512,1))
