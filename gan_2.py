@@ -372,7 +372,7 @@ def fit(train_ds, test_ds, steps):
     if (step + 1) % 5000 == 0:
       checkpoint.save(file_prefix=checkpoint_prefix)
 
-fit(train_dataset, test_dataset, steps=40000)
+fit(train_dataset, test_dataset, steps=400000)
 
 generator.save('outputs/generator_ct_to_cbct.h5')
 discriminator.save('outputs/discriminator__ct_to_cbct.h5')
