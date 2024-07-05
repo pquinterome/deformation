@@ -69,15 +69,15 @@ ct = np.concatenate((ct0, ct1, ct2, ct3, ct4, ct5, ct6))
 cbct = np.concatenate((cbct0, cbct1, cbct2, cbct3, cbct4, cbct5, cbct6))
 ct.shape
 
-ct2 = ct[:, ::-1, :]
-ct3 = ct[:, :, ::-1]
-ct4 = np.rot90(ct, 2)
-ct = np.concatenate((ct, ct2, ct3, ct4))
+#ct2 = ct[:, ::-1, :]
+#ct3 = ct[:, :, ::-1]
+#ct4 = np.rot90(ct, 2)
+#ct = np.concatenate((ct, ct2, ct3, ct4))
 
-cbct2 = cbct[:, ::-1, :]
-cbct3 = cbct[:, :, ::-1]
-cbct4 = np.rot90(cbct, 2)
-cbct = np.concatenate((cbct, cbct2, cbct3, cbct4))
+#cbct2 = cbct[:, ::-1, :]
+#cbct3 = cbct[:, :, ::-1]
+#cbct4 = np.rot90(cbct, 2)
+#cbct = np.concatenate((cbct, cbct2, cbct3, cbct4))
 
 y = ct  #[:200,:,:,:]
 X = cbct    #[:200,:,:,:]
