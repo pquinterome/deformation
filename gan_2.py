@@ -69,8 +69,8 @@ ct = np.concatenate((ct0, ct1, ct2, ct3, ct4, ct5, ct6))
 cbct = np.concatenate((cbct0, cbct1, cbct2, cbct3, cbct4, cbct5, cbct6))
 print(ct.shape)
 
-ct = ct.reshape((320, 512, 512,1))
-cbct = cbct.reshape((320, 512, 512,1))
+ct = ct.reshape((400, 512, 512,1))
+cbct = cbct.reshape((400, 512, 512,1))
 
 ct2 = ct[:, ::-1, :]
 ct3 = ct[:, :, ::-1]
