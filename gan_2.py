@@ -92,6 +92,23 @@ cbct3 = cbct[:, :, ::-1]
 cbct4 = np.rot90(cbct, 2)
 cbct = np.concatenate((cbct, cbct2, cbct3, cbct4))
 
+
+ct5 = np.load('./cbct_project/ct2.npy')
+cbct5 = np.load('./cbct_project/cbct2.npy')
+ct2 = ct5[:, ::-1, :]
+ct3 = ct5[:, :, ::-1]
+ct4 = np.rot90(ct5, 2)
+cty = np.concatenate((ct5, ct2, ct3, ct4))
+
+cbct2 = cbct5[:, ::-1, :]
+cbct3 = cbct5[:, :, ::-1]
+cbct4 = np.rot90(cbct5, 2)
+cbcty = np.concatenate((cbct5, cbct2, cbct3, cbct4))
+
+
+ct = np.concatenate((ct, cty))
+cbct= np.concatenate((cbct, cbcty))
+
 y = ct  #[:200,:,:,:]
 X = cbct    #[:200,:,:,:]
 X_train, X_valid, y_train, y_valid = train_test_split(X, y, test_size=0.2, random_state=123)
@@ -382,7 +399,7 @@ def fit(train_ds, test_ds, steps):
     if (step + 1) % 5000 == 0:
       checkpoint.save(file_prefix=checkpoint_prefix)
 
-fit(train_dataset, test_dataset, steps=80000)
+fit(train_dataset, test_dataset, steps=40000)
 
 generator.save('outputs/generator_ct_to_cbct.h5')
 discriminator.save('outputs/discriminator__ct_to_cbct.h5')
