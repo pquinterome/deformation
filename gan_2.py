@@ -44,6 +44,7 @@ print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
 
 # Bringing in matplotlib for viz stuff
 from matplotlib import pyplot as plt
+a= 5
 # Bring in the sequential api for the generator and discriminator
 from tensorflow.keras.models import Sequential
 # Bring in the layers for the neural network
